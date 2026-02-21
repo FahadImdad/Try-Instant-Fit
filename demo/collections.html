@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collections | Your Brand</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="#">
+</head>
+<body>
+
+<header class="site-header">
+
+  <div class="header-utility">
+    <a href="account.html">Login / Register</a>
+    <a href="#">Track Your Order</a>
+    <a href="#">Find Stores</a>
+  </div>
+
+  <div class="header-main">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+      <svg viewBox="0 0 30 24" fill="none" stroke="#2D2B2A" stroke-width="2">
+        <path d="M0 2h30M0 12h30M0 22h30"/>
+      </svg>
+    </button>
+
+    <a href="index.html" class="site-logo">
+      <div class="logo-svg-wrap">
+        <svg class="logo-mark" viewBox="0 0 120 70" fill="none">
+          <path d="M20 55 C10 45, 8 30, 20 22 C32 14, 48 20, 52 32 C56 44, 44 55, 32 52 C24 50, 18 42, 22 34" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M45 50 C38 40, 40 28, 52 24 C64 20, 76 28, 76 40 C76 52, 64 58, 55 54" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M70 45 C65 36, 68 26, 80 24 C92 22, 100 32, 98 44 C96 56, 84 60, 76 56" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-wordmark">Your Brand</span>
+      </div>
+    </a>
+
+    <form class="header-search" id="searchForm">
+      <input type="text" placeholder="Search products, fabrics and more...">
+      <div class="search-icons">
+        <button type="submit" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <div class="header-actions">
+      <a href="account.html" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a href="#" title="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+      </a>
+      <button class="js-open-cart" style="position:relative;" title="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge js-cart-count" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="collections.html?cat=new-in" class="nav-link" style="color:#FF5C35;">New In</a>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=all" class="nav-link nav-eid">From Ramadan to Eid</a>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=women" class="nav-link">
+          Women
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-3">
+          <div class="mega-col">
+            <h4>Ready To Wear</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">All Women</a></li>
+              <li><a href="collections.html?cat=women">Kurta</a></li>
+              <li><a href="collections.html?cat=women">2 Piece</a></li>
+              <li><a href="collections.html?cat=women">3 Piece</a></li>
+              <li><a href="collections.html?cat=women">Shalwar</a></li>
+              <li><a href="collections.html?cat=women">Dupatta</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Signature</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">Embroidered</a></li>
+              <li><a href="collections.html?cat=women">Lawn Collection</a></li>
+              <li><a href="collections.html?cat=women">Chiffon Formals</a></li>
+              <li><a href="collections.html?cat=women">Khaddar</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Essentials</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">Casual Kurta</a></li>
+              <li><a href="collections.html?cat=women">Blouse</a></li>
+              <li><a href="collections.html?cat=women">Tunic</a></li>
+              <li><a href="collections.html?cat=fabrics">Unstitched Fabrics</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=ready-to-wear">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="Ready To Wear">
+              <span class="view-all-link">View All Ready To Wear →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=men" class="nav-link">
+          Men
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-3">
+          <div class="mega-col">
+            <h4>Kameez Shalwar</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">All Men</a></li>
+              <li><a href="collections.html?cat=men">2 Piece Sets</a></li>
+              <li><a href="collections.html?cat=men">Blended</a></li>
+              <li><a href="collections.html?cat=men">Cotton</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Kurta</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">Casual Kurta</a></li>
+              <li><a href="collections.html?cat=men">Formal Kurta</a></li>
+              <li><a href="collections.html?cat=men">Special Kurta</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>By Occasion</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">Eid Collection</a></li>
+              <li><a href="collections.html?cat=men">Wedding Guest</a></li>
+              <li><a href="collections.html?cat=men">Daily Wear</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=men">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="Men's Collection">
+              <span class="view-all-link">View All Men →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=fabrics" class="nav-link">
+          Fabrics
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-2">
+          <div class="mega-col">
+            <h4>Essentials</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">2 Piece</a></li>
+              <li><a href="collections.html?cat=fabrics">3 Piece</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Signature</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">2 Piece</a></li>
+              <li><a href="collections.html?cat=fabrics">3 Piece</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=fabrics">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/26-3841_1.jpg?v=1770011691" alt="Fabrics">
+              <span class="view-all-link">View All Fabrics →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+            </ul>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=sale" class="nav-link nav-sale">
+          Sale
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-1">
+          <div class="mega-col">
+            <h4>Sale</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">Fabrics</a></li>
+              <li><a href="collections.html?cat=ready-to-wear">Ready To Wear</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=sale">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JLS-26-568_1.jpg?v=1770459212" alt="Sale" style="height:140px;">
+              <span class="view-all-link" style="color:#FF5C35;">View All Sale →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a href="collections.html?cat=all" class="nav-link">Now Happening</a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+  <div class="mnd-hd">
+    <span class="mnd-logo">YOUR BRAND</span>
+    <button class="mnd-close" id="mobileNavClose">×</button>
+  </div>
+  <div class="mnd-items">
+    <div class="mnd-item"><a href="collections.html?cat=new-in" class="orange">New In</a></div>
+    <div class="mnd-item"><a href="collections.html?cat=all">From Ramadan to Eid</a></div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">Women <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=women">All Women</a>
+        <a href="collections.html?cat=women">Kurta</a>
+        <a href="collections.html?cat=women">3 Piece</a>
+        <a href="collections.html?cat=women">Unstitched</a>
+      </div>
+    </div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">Men <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=men">All Men</a>
+        <a href="collections.html?cat=men">Kameez Shalwar</a>
+        <a href="collections.html?cat=men">Kurta</a>
+        <a href="collections.html?cat=men">Special Kurta</a>
+      </div>
+    </div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">Fabrics <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=fabrics">All Fabrics</a>
+        <a href="collections.html?cat=fabrics">Essentials</a>
+        <a href="collections.html?cat=fabrics">Signature</a>
+      </div>
+    </div>
+    <div class="mnd-item"><a href="collections.html?cat=sale" class="orange">Sale</a></div>
+    <div class="mnd-item"><a href="collections.html?cat=all">Now Happening</a></div>
+    <div class="mnd-item"><a href="about.html">About Us</a></div>
+    <div class="mnd-item"><a href="account.html">Login / Register</a></div>
+    <div class="mnd-item"><a href="#">Track Your Order</a></div>
+    <div class="mnd-item"><a href="#">Find Stores</a></div>
+  </div>
+</div>
+<div class="drawer-overlay" id="mobileNavOverlay"></div>
+
+<!-- Breadcrumb -->
+<div class="container-sm" style="padding-top:16px;padding-bottom:8px;">
+  <nav class="page-bc">
+    <a href="index.html">Home</a>
+    <span>/</span>
+    <span id="bc-cat">Collections</span>
+  </nav>
+</div>
+
+<!-- Collection Layout -->
+<div class="container-sm" style="padding-bottom:80px;">
+  <div class="coll-layout">
+
+    <!-- Filter Sidebar -->
+    <aside class="coll-filters" id="filterSidebar">
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid #EBEBEB;">
+        <span style="font-size:15px;font-weight:700;color:#2D2B2A;">Filters</span>
+        <button onclick="clearAllFilters()" style="font-size:12px;color:#8F8F8F;text-decoration:underline;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;">Clear All</button>
+      </div>
+
+      <!-- Gender -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Gender
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <label class="fs-opt"><input type="checkbox" name="gender" value="women"> <span>Women</span></label>
+          <label class="fs-opt"><input type="checkbox" name="gender" value="men"> <span>Men</span></label>
+        </div>
+      </div>
+
+      <!-- Discount -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Discount
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <label class="fs-opt"><input type="checkbox" name="discount" value="30"> <span>30% and above</span></label>
+          <label class="fs-opt"><input type="checkbox" name="discount" value="35"> <span>35% and above</span></label>
+          <label class="fs-opt"><input type="checkbox" name="discount" value="50"> <span>50% and above</span></label>
+          <label class="fs-opt"><input type="checkbox" name="discount" value="70"> <span>70% and above</span></label>
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Category
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <label class="fs-opt"><input type="checkbox" name="type" value="2 Piece"> <span>2 Piece</span></label>
+          <label class="fs-opt"><input type="checkbox" name="type" value="3 Piece"> <span>3 Piece</span></label>
+          <label class="fs-opt"><input type="checkbox" name="type" value="Kurta"> <span>Kurta</span></label>
+          <label class="fs-opt"><input type="checkbox" name="type" value="Pants"> <span>Pants</span></label>
+          <label class="fs-opt"><input type="checkbox" name="type" value="Shirt"> <span>Shirt</span></label>
+          <label class="fs-opt"><input type="checkbox" name="type" value="Dupatta"> <span>Dupatta</span></label>
+          
+          
+        </div>
+      </div>
+
+      <!-- Size -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Size
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="XS"> <span>XS</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="S"> <span>S</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="M"> <span>M</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="L"> <span>L</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="XL"> <span>XL</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="XXL"> <span>XXL</span></label>
+            <label class="fs-size-opt"><input type="checkbox" name="size" value="XXXL"> <span>XXXL</span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Colour
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <div style="display:flex;flex-wrap:wrap;gap:8px;">
+            <label class="fs-color-opt" title="Black"><input type="checkbox" name="color" value="Black"><span style="background:#2D2B2A;"></span></label>
+            <label class="fs-color-opt" title="White"><input type="checkbox" name="color" value="White"><span style="background:#FFFFFF;border:1px solid #DCDBDB;"></span></label>
+            <label class="fs-color-opt" title="Navy"><input type="checkbox" name="color" value="Navy"><span style="background:#1A1F71;"></span></label>
+            <label class="fs-color-opt" title="Green"><input type="checkbox" name="color" value="Green"><span style="background:#2D6A4F;"></span></label>
+            <label class="fs-color-opt" title="Maroon"><input type="checkbox" name="color" value="Maroon"><span style="background:#7A1426;"></span></label>
+            <label class="fs-color-opt" title="Ivory"><input type="checkbox" name="color" value="Ivory"><span style="background:#FFFFF0;border:1px solid #DCDBDB;"></span></label>
+            <label class="fs-color-opt" title="Dusty Pink"><input type="checkbox" name="color" value="Dusty Pink"><span style="background:#D4A5A5;"></span></label>
+            <label class="fs-color-opt" title="Teal"><input type="checkbox" name="color" value="Teal"><span style="background:#2D8A8A;"></span></label>
+            <label class="fs-color-opt" title="Orange"><input type="checkbox" name="color" value="Orange"><span style="background:#FF5C35;"></span></label>
+            <label class="fs-color-opt" title="Purple"><input type="checkbox" name="color" value="Purple"><span style="background:#6B3FA0;"></span></label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fabric -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Fabric
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Lawn"> <span>Lawn</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Khaddar"> <span>Khaddar</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Karandi"> <span>Karandi</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Raw Silk"> <span>Raw Silk</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Chiffon"> <span>Chiffon</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Linen"> <span>Linen</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Cotton"> <span>Cotton</span></label>
+          <label class="fs-opt"><input type="checkbox" name="fabric" value="Cambric"> <span>Cambric</span></label>
+        </div>
+      </div>
+
+      <!-- Treatment -->
+      <div class="fs-group open">
+        <button class="fs-title js-fs-toggle">
+          Treatment
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="fs-body">
+          <label class="fs-opt"><input type="checkbox" name="treatment" value="Embroidered"> <span>Embroidered</span></label>
+          <label class="fs-opt"><input type="checkbox" name="treatment" value="Printed"> <span>Printed</span></label>
+          <label class="fs-opt"><input type="checkbox" name="treatment" value="Block Printed"> <span>Block Printed</span></label>
+          <label class="fs-opt"><input type="checkbox" name="treatment" value="Digital Printed"> <span>Digital Printed</span></label>
+          <label class="fs-opt"><input type="checkbox" name="treatment" value="Plain"> <span>Plain</span></label>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Main Products Area -->
+    <div class="coll-main">
+
+      <!-- Page Title + Toolbar -->
+      <div style="margin-bottom:20px;">
+        <h1 id="coll-title" style="font-size:clamp(20px,3vw,26px);font-weight:700;color:#2D2B2A;margin-bottom:16px;">Collections</h1>
+
+        <div class="coll-toolbar">
+          <span class="coll-count" id="collCount">0 items</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div class="view-tog">
+              <button class="vt-btn active" id="vt4" title="4-column grid" onclick="setView(4)">
+                <svg viewBox="0 0 20 20" fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="5" y="0" width="4" height="4"/><rect x="10" y="0" width="4" height="4"/><rect x="15" y="0" width="4" height="4"/><rect x="0" y="5" width="4" height="4"/><rect x="5" y="5" width="4" height="4"/><rect x="10" y="5" width="4" height="4"/><rect x="15" y="5" width="4" height="4"/></svg>
+              </button>
+              <button class="vt-btn" id="vt2" title="2-column grid" onclick="setView(2)">
+                <svg viewBox="0 0 20 20" fill="currentColor"><rect x="0" y="0" width="8" height="8"/><rect x="12" y="0" width="8" height="8"/><rect x="0" y="12" width="8" height="8"/><rect x="12" y="12" width="8" height="8"/></svg>
+              </button>
+            </div>
+            <select class="coll-sort" id="collSort" onchange="doSort()">
+              <option value="recommended">Recommended</option>
+              <option value="top-sellers">Top Sellers</option>
+              <option value="most-popular">Most Popular</option>
+              <option value="new-arrival">New Arrival</option>
+              <option value="price-asc">Price Low To High</option>
+              <option value="price-desc">Price High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="collGrid"></div>
+
+      <!-- Empty State -->
+      <div id="collEmpty" style="display:none;text-align:center;padding:80px 20px;color:#8F8F8F;">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom:16px;opacity:0.4;"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        <p style="font-size:16px;font-weight:600;color:#2D2B2A;margin-bottom:8px;">No products found</p>
+        <p style="font-size:14px;">Try adjusting your filters or <a href="collections.html" style="color:#FF5C35;">browse all products</a>.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container-sm">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">Frequently Asked Questions</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Disclaimer</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">More From Your Brand</div>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Cloth Care</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Get in Touch</div>
+        <div class="footer-address">
+          
+          
+          Pakistan · UK · UAE · US<br><br>
+          <a href="mailto:hello@tryinstantfit.com" style="color:rgba(255,255,255,0.65);">hello@tryinstantfit.com</a><br><br>
+          <a href="#" style="color:rgba(255,255,255,0.65);">Track Your Order</a><br>
+          <a href="#" style="color:rgba(255,255,255,0.65);margin-top:4px;display:block;">Find Stores</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Get the Latest News</div>
+        <form class="footer-nl-form js-nl-form" onsubmit="return false;" style="margin-bottom:16px;">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Confirm</button>
+        </form>
+        <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5;">By subscribing you agree to our Privacy Policy.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-social">
+        <a href="#" target="_blank" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77-.39 2.89 2.89 0 015.77.39V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg>
+        </a>
+        <a href="#" target="_blank" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+        </a>
+        <a href="#" target="_blank" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="#" target="_blank" class="social-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+      <div class="footer-payment">
+        <span class="payment-badge">VISA</span>
+        <span class="payment-badge">Mastercard</span>
+        <span class="payment-badge">Amex</span>
+        <span class="payment-badge">UnionPay</span>
+        <span class="payment-badge" style="color:#27AE60;">🔒 100% Safe Checkout</span>
+      </div>
+      <div class="footer-copy">
+        Copyright © 2026 Try Instant Fit. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-hd">
+    <span>My Bag (<span class="js-cart-count">0</span>)</span>
+    <button class="js-close-cart">×</button>
+  </div>
+  <div class="drawer-body" id="cartDrawerItems"></div>
+  <div class="drawer-ft">
+    <div class="drawer-total"><span>Subtotal</span><span id="cartDrawerTotal">PKR 0</span></div>
+    <a href="cart.html" class="btn-checkout" style="display:flex;align-items:center;justify-content:center;text-decoration:none;margin-bottom:10px;">View Bag</a>
+    <button class="btn-checkout" onclick="window.location.href='cart.html'">Checkout</button>
+  </div>
+</div>
+<div class="drawer-overlay" id="cartOverlay"></div>
+
+<button class="chat-btn" onclick="alert('Live chat support')" title="Chat">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+</button>
+<button id="backTop" class="back-top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<style>
+.coll-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 32px;
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .coll-layout { grid-template-columns: 1fr; }
+  .coll-filters { display: none; }
+}
+.coll-filters {
+  position: sticky;
+  top: 90px;
+  background: #fff;
+  border: 1px solid #EBEBEB;
+  border-radius: 8px;
+  padding: 20px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+.fs-group {
+  border-bottom: 1px solid #EBEBEB;
+  margin-bottom: 4px;
+}
+.fs-title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2D2B2A;
+  padding: 12px 0;
+  font-family: inherit;
+  text-align: left;
+}
+.fs-title svg { width: 14px; height: 14px; transition: transform 0.2s; flex-shrink: 0; }
+.fs-group.open .fs-title svg { transform: rotate(180deg); }
+.fs-body { display: none; padding-bottom: 12px; }
+.fs-group.open .fs-body { display: block; }
+.fs-opt {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  cursor: pointer;
+  font-size: 13px;
+  color: #2D2B2A;
+}
+.fs-opt input[type=checkbox] { accent-color: #FF5C35; width: 14px; height: 14px; flex-shrink: 0; }
+.fs-size-opt { display: inline-flex; cursor: pointer; }
+.fs-size-opt span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #DCDBDB;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2D2B2A;
+  transition: all 0.2s;
+}
+.fs-size-opt input { display: none; }
+.fs-size-opt input:checked + span { border-color: #2D2B2A; background: #2D2B2A; color: #fff; }
+.fs-color-opt { display: inline-flex; cursor: pointer; }
+.fs-color-opt span {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px transparent;
+  transition: box-shadow 0.2s;
+}
+.fs-color-opt input { display: none; }
+.fs-color-opt input:checked + span { box-shadow: 0 0 0 2px #FF5C35; }
+.coll-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-top: 1px solid #EBEBEB;
+  border-bottom: 1px solid #EBEBEB;
+  margin-bottom: 20px;
+}
+.coll-count { font-size: 13px; color: #8F8F8F; }
+.coll-sort {
+  border: 1px solid #DCDBDB;
+  border-radius: 4px;
+  padding: 7px 12px;
+  font-size: 13px;
+  color: #2D2B2A;
+  cursor: pointer;
+  outline: none;
+  font-family: inherit;
+  background: #fff;
+}
+.view-tog { display: flex; gap: 4px; }
+.vt-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #DCDBDB;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8F8F8F;
+  transition: all 0.2s;
+}
+.vt-btn.active { border-color: #2D2B2A; color: #2D2B2A; background: #F5F3EE; }
+.vt-btn svg { width: 14px; height: 14px; }
+</style>
+
+<script src="js/main.js"></script>
+<script>
+  let currentCat = 'all';
+  let currentSort = 'recommended';
+
+  function setView(n) {
+    const grid = document.getElementById('collGrid');
+    if (n === 2) {
+      grid.style.gridTemplateColumns = 'repeat(2, 1fr)';
+      document.getElementById('vt2').classList.add('active');
+      document.getElementById('vt4').classList.remove('active');
+    } else {
+      grid.style.gridTemplateColumns = '';
+      document.getElementById('vt4').classList.add('active');
+      document.getElementById('vt2').classList.remove('active');
+    }
+  }
+
+  function doSort() {
+    currentSort = document.getElementById('collSort').value;
+    renderCollections();
+  }
+
+  function clearAllFilters() {
+    document.querySelectorAll('.coll-filters input[type=checkbox]').forEach(cb => cb.checked = false);
+    renderCollections();
+  }
+
+  function getChecked(name) {
+    return [...document.querySelectorAll(`.coll-filters input[name="${name}"]:checked`)].map(cb => cb.value);
+  }
+
+  function renderCollections() {
+    if (typeof PRODUCTS === 'undefined') return;
+    let items = [...PRODUCTS];
+
+    // Category / gender routing
+    if (currentCat && currentCat !== 'all') {
+      if (currentCat === 'men') {
+        items = items.filter(p => p.gender === 'men');
+      } else if (currentCat === 'women') {
+        items = items.filter(p => !p.gender || p.gender === 'women');
+      } else if (currentCat === 'sale') {
+        items = items.filter(p => p.discount > 0);
+      } else if (currentCat === 'new-in') {
+        items = items.filter(p => p.badge === 'new' || p.featured);
+      } else {
+        items = items.filter(p => p.cat === currentCat);
+      }
+    }
+
+    // Sidebar filters
+    const genders   = getChecked('gender');
+    const discounts = getChecked('discount').map(Number);
+    const types     = getChecked('type');
+    const sizes     = getChecked('size');
+    const colors    = getChecked('color');
+    const fabrics   = getChecked('fabric');
+    const treatments= getChecked('treatment');
+
+    if (genders.length)    items = items.filter(p => genders.includes(p.gender || 'women'));
+    if (discounts.length)  items = items.filter(p => discounts.some(d => p.discount >= d));
+    if (types.length)      items = items.filter(p => types.includes(p.type));
+    if (sizes.length)      items = items.filter(p => p.sizes.some(s => sizes.includes(s)));
+    if (colors.length)     items = items.filter(p => p.colorNames && p.colorNames.some(c => colors.includes(c)));
+    if (fabrics.length)    items = items.filter(p => fabrics.some(f => p.fabric.includes(f)));
+    if (treatments.length) items = items.filter(p => treatments.some(t => p.fabric.includes(t)));
+
+    // Sort
+    if (currentSort === 'price-asc')   items.sort((a, b) => a.price - b.price);
+    else if (currentSort === 'price-desc') items.sort((a, b) => b.price - a.price);
+    else if (currentSort === 'new-arrival') items.sort((a, b) => (b.badge === 'new' ? 1 : 0) - (a.badge === 'new' ? 1 : 0));
+    else if (currentSort === 'top-sellers') items.sort((a, b) => (b.bestseller ? 1 : 0) - (a.bestseller ? 1 : 0));
+
+    const grid = document.getElementById('collGrid');
+    const empty = document.getElementById('collEmpty');
+    const count = document.getElementById('collCount');
+    count.textContent = items.length + ' item' + (items.length !== 1 ? 's' : '');
+    if (!items.length) {
+      grid.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+    grid.innerHTML = items.map(renderCard).join('');
+    grid.querySelectorAll('.product-card').forEach(card => {
+      card.addEventListener('click', e => {
+        if (!e.target.closest('button')) goProduct(card.dataset.id);
+      });
+    });
+  }
+
+  document.querySelectorAll('.js-fs-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.closest('.fs-group').classList.toggle('open');
+    });
+  });
+
+  // Re-render on any filter change
+  document.querySelectorAll('.coll-filters input[type=checkbox]').forEach(cb => {
+    cb.addEventListener('change', renderCollections);
+  });
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const params = new URLSearchParams(window.location.search);
+    currentCat = params.get('cat') || 'all';
+    const titleMap = {
+      'ready-to-wear': 'Ready To Wear',
+      'women': 'Women',
+      'men': 'Men',
+      'fabrics': 'Fabrics',
+      'sale': 'Sale',
+      'new-in': 'New In',
+      'all': 'All Products'
+    };
+    const label = titleMap[currentCat] || 'Collections';
+    document.getElementById('coll-title').textContent = label;
+    document.getElementById('bc-cat').textContent = label;
+    document.title = label + ' | Your Brand';
+    renderCollections();
+  });
+</script>
+</body>
+</html>

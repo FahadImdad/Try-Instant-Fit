@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login / Register | Your Brand</title>
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-utility">
+    <a href="#">Track Your Order</a>
+    <a href="#">Find Stores</a>
+  </div>
+  <div class="header-main">
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><svg viewBox="0 0 30 24" fill="none" stroke="#2D2B2A" stroke-width="2"><path d="M0 2h30M0 12h30M0 22h30"/></svg></button>
+    <a href="index.html" class="site-logo">
+      <div class="logo-svg-wrap">
+        <svg class="logo-mark" viewBox="0 0 120 70" fill="none">
+          <path d="M20 55 C10 45, 8 30, 20 22 C32 14, 48 20, 52 32 C56 44, 44 55, 32 52" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M45 50 C38 40, 40 28, 52 24 C64 20, 76 28, 76 40 C76 52, 64 58, 55 54" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M70 45 C65 36, 68 26, 80 24 C92 22, 100 32, 98 44 C96 56, 84 60, 76 56" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-wordmark">Your Brand</span>
+      </div>
+    </a>
+    <div style="flex:1;"></div>
+    <div class="header-actions">
+      <button class="js-open-cart" style="position:relative;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-badge js-cart-count" style="display:none">0</span></button>
+    </div>
+  </div>
+  <nav class="header-nav">
+    <ul class="nav-list">
+      <li><a href="collections.html?cat=new-in" class="nav-link" style="color:#FF5C35;">New In</a></li>
+      <li><a href="collections.html?cat=ready-to-wear" class="nav-link">Ready To Wear</a></li>
+      <li><a href="collections.html?cat=fabrics" class="nav-link">Fabrics</a></li>
+      <li><a href="collections.html?cat=sale" class="nav-link nav-sale">Sale</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+  <div class="mnd-hd"><span class="mnd-logo">YOUR BRAND</span><button class="mnd-close" id="mobileNavClose">×</button></div>
+  <div class="mnd-items">
+    <div class="mnd-item"><a href="index.html">Home</a></div>
+    <div class="mnd-item"><a href="collections.html?cat=ready-to-wear">Ready To Wear</a></div>
+    <div class="mnd-item"><a href="collections.html?cat=sale" class="orange">Sale</a></div>
+  </div>
+</div>
+<div class="drawer-overlay" id="mobileNavOverlay"></div>
+
+<!-- Auth Page -->
+<div class="auth-wrap">
+  <div style="width:100%;max-width:900px;">
+
+    <!-- Tab switcher -->
+    <div style="display:flex;justify-content:center;margin-bottom:40px;">
+      <div style="background:#fff;border:1px solid #DCDBDB;border-radius:50px;padding:5px;display:inline-flex;">
+        <button id="tab-login-btn" onclick="switchAuthTab('login')"
+          style="padding:10px 36px;border-radius:40px;font-size:14px;font-weight:700;cursor:pointer;background:#2D2B2A;color:#fff;border:none;font-family:inherit;transition:all 0.25s;">
+          Login
+        </button>
+        <button id="tab-reg-btn" onclick="switchAuthTab('reg')"
+          style="padding:10px 36px;border-radius:40px;font-size:14px;font-weight:700;cursor:pointer;background:transparent;color:#8F8F8F;border:none;font-family:inherit;transition:all 0.25s;">
+          Sign Up
+        </button>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+
+      <!-- LOGIN -->
+      <div id="login-panel">
+        <div class="auth-box">
+          <h2 class="auth-title">Welcome Back</h2>
+          <p class="auth-sub">Sign in to your Your Brand account</p>
+
+          <!-- Google -->
+          <button onclick="toast('Google sign-in coming soon!','success')" style="width:100%;height:46px;border:1.5px solid #DCDBDB;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;background:#fff;color:#2D2B2A;margin-bottom:8px;transition:background 0.2s;" onmouseover="this.style.background='#f9f9f9'" onmouseout="this.style.background='#fff'">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Continue with Google
+          </button>
+          <button onclick="toast('Facebook sign-in coming soon!','success')" style="width:100%;height:46px;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;font-family:inherit;background:#1877F2;color:#fff;margin-bottom:22px;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            Continue with Facebook
+          </button>
+
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;font-size:12px;color:#8F8F8F;">
+            <div style="flex:1;height:1px;background:#DCDBDB;"></div>or<div style="flex:1;height:1px;background:#DCDBDB;"></div>
+          </div>
+
+          <form onsubmit="handleLogin(event)">
+            <div class="form-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-field">
+              <label>Password</label>
+              <div style="position:relative;">
+                <input type="password" id="lp" placeholder="Enter your password" required style="padding-right:52px;">
+                <button type="button" onclick="togglePwd('lp',this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:#8F8F8F;cursor:pointer;font-family:inherit;font-weight:700;background:none;border:none;">SHOW</button>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;">
+                <input type="checkbox" style="accent-color:#2D2B2A;"> Remember me
+              </label>
+              <a href="#" style="font-size:13px;color:#FF5C35;text-decoration:underline;">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn-auth">Login</button>
+          </form>
+          <p class="auth-link">Don't have account? <a href="#" onclick="switchAuthTab('reg')">Sign Up</a></p>
+        </div>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="reg-panel" style="display:none;">
+        <div class="auth-box">
+          <h2 class="auth-title">Create Account</h2>
+          <p class="auth-sub">Join Your Brand and start your journey</p>
+          <form onsubmit="handleReg(event)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+              <div class="form-field"><label>First Name</label><input type="text" placeholder="First name" required></div>
+              <div class="form-field"><label>Last Name</label><input type="text" placeholder="Last name" required></div>
+            </div>
+            <div class="form-field"><label>Email Address</label><input type="email" placeholder="your@email.com" required></div>
+            <div class="form-field"><label>Confirm Email</label><input type="email" placeholder="Confirm email" required></div>
+            <div class="form-field">
+              <label>Password</label>
+              <div style="position:relative;">
+                <input type="password" id="rp" placeholder="Create a password" required style="padding-right:52px;">
+                <button type="button" onclick="togglePwd('rp',this)" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:11px;color:#8F8F8F;cursor:pointer;font-family:inherit;font-weight:700;background:none;border:none;">SHOW</button>
+              </div>
+            </div>
+            <div class="form-field"><label>Confirm Password</label><input type="password" placeholder="Confirm password" required></div>
+            <label style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#3E3E3E;cursor:pointer;margin-bottom:20px;line-height:1.5;">
+              <input type="checkbox" style="accent-color:#2D2B2A;margin-top:2px;">
+              I'd like to receive exclusive offers and news from Your Brand
+            </label>
+            <p style="font-size:12px;color:#8F8F8F;margin-bottom:18px;line-height:1.5;">
+              By creating an account you agree to our <a href="#" style="color:#FF5C35;">Terms &amp; Conditions</a> and <a href="#" style="color:#FF5C35;">Privacy Policy</a>.
+            </p>
+            <button type="submit" class="btn-auth">Sign Up</button>
+          </form>
+          <p class="auth-link">Already have an account? <a href="#" onclick="switchAuthTab('login')">Login</a></p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Quick Order Lookup -->
+    <div style="margin-top:32px;background:#fff;border:1px solid #DCDBDB;border-radius:12px;padding:28px;">
+      <h3 style="font-size:16px;font-weight:700;margin-bottom:6px;">Guest Order Lookup</h3>
+      <p style="font-size:13px;color:#8F8F8F;margin-bottom:20px;">Track your order without creating an account.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;">
+        <div><label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;color:#2D2B2A;">Order Number</label><input type="text" placeholder="Order #" style="width:100%;height:42px;border:1.5px solid #DCDBDB;border-radius:8px;padding:0 12px;font-size:13px;"></div>
+        <div><label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;color:#2D2B2A;">Email</label><input type="email" placeholder="Email address" style="width:100%;height:42px;border:1.5px solid #DCDBDB;border-radius:8px;padding:0 12px;font-size:13px;"></div>
+        <div><label style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;display:block;margin-bottom:6px;color:#2D2B2A;">Billing ZIP</label><input type="text" placeholder="ZIP / Postal" style="width:100%;height:42px;border:1.5px solid #DCDBDB;border-radius:8px;padding:0 12px;font-size:13px;"></div>
+        <button onclick="toast('Order found! Tracking details sent to your email.','success')" style="height:42px;padding:0 20px;background:#2D2B2A;color:#fff;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;border:none;transition:background 0.2s;" onmouseover="this.style.background='#FF5C35'" onmouseout="this.style.background='#2D2B2A'">Look Up Order</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-hd"><h3>My Bag</h3><button class="drawer-close" id="cartDrawerClose">×</button></div>
+  <div class="drawer-body" id="cartDrawerBody"></div>
+  <div class="drawer-foot">
+    <div class="drawer-total"><span>Subtotal</span><span id="cartDrawerTotal">PKR 0</span></div>
+    <button class="btn-checkout" onclick="window.location.href='cart.html'">Checkout</button>
+  </div>
+</div>
+<div class="drawer-overlay" id="cartOverlay"></div>
+
+<footer>
+  <div class="container-sm">
+    <div class="footer-grid">
+      <div class="footer-col"><div class="footer-col-title">Help</div><ul><li><a href="#">FAQs</a></li><li><a href="#">Terms &amp; Conditions</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">More From Your Brand</div><ul><li><a href="about.html">About Us</a></li><li><a href="#">Blogs</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Get in Touch</div><div class="footer-address"><a href="mailto:hello@tryinstantfit.com" style="color:rgba(255,255,255,0.65);">hello@tryinstantfit.com</a></div></div>
+      <div class="footer-col"><div class="footer-col-title">Newsletter</div><form class="footer-nl-form js-nl-form" onsubmit="return false;"><input type="email" placeholder="Email Address"><button>Confirm</button></form></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-social">
+        <a href="#" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.77-.39 2.89 2.89 0 015.77.39V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg></a>
+        <a href="#" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+        <a href="#" target="_blank" class="social-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      </div>
+      <div class="footer-payment"><span class="payment-badge">VISA</span><span class="payment-badge">Mastercard</span><span class="payment-badge">Amex</span></div>
+      <div class="footer-copy">Copyright © 2026 Try Instant Fit. All Rights Reserved.</div>
+    </div>
+  </div>
+</footer>
+
+<button class="chat-btn" onclick="alert('Live chat support')" title="Chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></button>
+<button id="backTop" class="back-top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg></button>
+
+<script src="js/main.js"></script>
+<script>
+  function switchAuthTab(tab) {
+    const lBtn = document.getElementById('tab-login-btn');
+    const rBtn = document.getElementById('tab-reg-btn');
+    const lPanel = document.getElementById('login-panel');
+    const rPanel = document.getElementById('reg-panel');
+    if (tab === 'login') {
+      lBtn.style.background='#2D2B2A'; lBtn.style.color='#fff';
+      rBtn.style.background='transparent'; rBtn.style.color='#8F8F8F';
+      lPanel.style.display='block'; rPanel.style.display='none';
+    } else {
+      rBtn.style.background='#2D2B2A'; rBtn.style.color='#fff';
+      lBtn.style.background='transparent'; lBtn.style.color='#8F8F8F';
+      rPanel.style.display='block'; lPanel.style.display='none';
+    }
+  }
+  function togglePwd(id, btn) {
+    const inp = document.getElementById(id);
+    inp.type = inp.type === 'password' ? 'text' : 'password';
+    btn.textContent = inp.type === 'password' ? 'SHOW' : 'HIDE';
+  }
+  function handleLogin(e) { e.preventDefault(); toast('Login successful! Redirecting...','success'); setTimeout(()=>window.location.href='index.html',1500); }
+  function handleReg(e) { e.preventDefault(); toast('Account created successfully!','success'); setTimeout(()=>window.location.href='index.html',1500); }
+</script>
+</body>
+</html>

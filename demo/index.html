@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Brand | Premium Fashion for Every Occasion</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="icon" href="#">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     HEADER
+═══════════════════════════════════════════════════════ -->
+<header class="site-header">
+
+  <!-- Utility bar -->
+  <div class="header-utility">
+    <a href="account.html">Login / Register</a>
+    <a href="#">Track Your Order</a>
+    <a href="#">Find Stores</a>
+  </div>
+
+  <!-- Main row -->
+  <div class="header-main">
+    <!-- Mobile menu -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open menu">
+      <svg viewBox="0 0 30 24" fill="none" stroke="#2D2B2A" stroke-width="2">
+        <path d="M0 2h30M0 12h30M0 22h30"/>
+      </svg>
+    </button>
+
+    <!-- Logo -->
+    <a href="index.html" class="site-logo">
+      <!-- Your Brand SVG Logo recreation -->
+      <div class="logo-svg-wrap">
+        <svg class="logo-mark" viewBox="0 0 120 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Flowing organic shapes representing the Your Brand logomark -->
+          <path d="M20 55 C10 45, 8 30, 20 22 C32 14, 48 20, 52 32 C56 44, 44 55, 32 52 C24 50, 18 42, 22 34" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M45 50 C38 40, 40 28, 52 24 C64 20, 76 28, 76 40 C76 52, 64 58, 55 54" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <path d="M70 45 C65 36, 68 26, 80 24 C92 22, 100 32, 98 44 C96 56, 84 60, 76 56" stroke="#F8643C" stroke-width="5" fill="none" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-wordmark">Your Brand</span>
+      </div>
+    </a>
+
+    <!-- Search -->
+    <form class="header-search" id="searchForm">
+      <input type="text" placeholder="Search products, fabrics and more...">
+      <div class="search-icons">
+        <button type="button" title="Scan barcode">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="1" y="1" width="5" height="5" rx="1"/><rect x="18" y="1" width="5" height="5" rx="1"/>
+            <rect x="1" y="18" width="5" height="5" rx="1"/>
+            <line x1="6" y1="3.5" x2="9" y2="3.5"/><line x1="3.5" y1="6" x2="3.5" y2="9"/>
+            <line x1="11" y1="1" x2="11" y2="6"/><line x1="13" y1="3" x2="18" y2="3"/>
+            <line x1="11" y1="10" x2="11" y2="12"/><line x1="13" y1="10" x2="18" y2="10"/>
+            <line x1="15" y1="12" x2="15" y2="18"/><line x1="18" y1="14" x2="18" y2="18"/>
+            <line x1="11" y1="15" x2="13" y2="15"/><line x1="23" y1="10" x2="23" y2="18"/>
+            <line x1="20" y1="6" x2="23" y2="6"/>
+          </svg>
+        </button>
+        <div class="divider-line"></div>
+        <button type="submit" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+          </svg>
+        </button>
+      </div>
+    </form>
+
+    <!-- Actions -->
+    <div class="header-actions">
+      <a href="account.html" title="Account">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+      <a href="#" title="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+        </svg>
+      </a>
+      <button class="js-open-cart" style="position:relative;" title="Cart">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-badge js-cart-count" style="display:none">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Desktop Nav -->
+  <nav class="header-nav">
+    <ul class="nav-list">
+
+      <!-- New In -->
+      <li class="nav-item">
+        <a href="collections.html?cat=new-in" class="nav-link" style="color:#FF5C35;">
+          New In
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-1">
+          <div class="mega-col">
+            <h4>New In</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">Fabrics</a></li>
+              <li><a href="collections.html?cat=ready-to-wear">Ready To Wear</a></li>
+              <li><a href="collections.html?cat=new-in">Tailored</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=new-in">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-33876_1.jpg?v=1770017694" alt="New In">
+              <span class="view-all-link">View New In →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- From Ramadan to Eid -->
+      <li class="nav-item">
+        <a href="collections.html?cat=all" class="nav-link nav-eid">From Ramadan to Eid</a>
+      </li>
+
+      <!-- Women -->
+      <li class="nav-item">
+        <a href="collections.html?cat=women" class="nav-link">
+          Women
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-3">
+          <div class="mega-col">
+            <h4>Ready To Wear</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">All Women</a></li>
+              <li><a href="collections.html?cat=women">Kurta</a></li>
+              <li><a href="collections.html?cat=women">2 Piece</a></li>
+              <li><a href="collections.html?cat=women">3 Piece</a></li>
+              <li><a href="collections.html?cat=women">Shalwar</a></li>
+              <li><a href="collections.html?cat=women">Dupatta</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Signature</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">Embroidered</a></li>
+              <li><a href="collections.html?cat=women">Lawn Collection</a></li>
+              <li><a href="collections.html?cat=women">Chiffon Formals</a></li>
+              <li><a href="collections.html?cat=women">Khaddar</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Essentials</h4>
+            <ul>
+              <li><a href="collections.html?cat=women">Casual Kurta</a></li>
+              <li><a href="collections.html?cat=women">Blouse</a></li>
+              <li><a href="collections.html?cat=women">Tunic</a></li>
+              <li><a href="collections.html?cat=fabrics">Unstitched Fabrics</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=women">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JLS-26-534_1.jpg?v=1770459197" alt="Women's Collection">
+              <span class="view-all-link">View All Women →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Men -->
+      <li class="nav-item">
+        <a href="collections.html?cat=men" class="nav-link">
+          Men
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-3">
+          <div class="mega-col">
+            <h4>Kameez Shalwar</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">All Men</a></li>
+              <li><a href="collections.html?cat=men">2 Piece Sets</a></li>
+              <li><a href="collections.html?cat=men">Blended</a></li>
+              <li><a href="collections.html?cat=men">Cotton</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Kurta</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">Casual Kurta</a></li>
+              <li><a href="collections.html?cat=men">Formal Kurta</a></li>
+              <li><a href="collections.html?cat=men">Special Kurta</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>By Occasion</h4>
+            <ul>
+              <li><a href="collections.html?cat=men">Eid Collection</a></li>
+              <li><a href="collections.html?cat=men">Wedding Guest</a></li>
+              <li><a href="collections.html?cat=men">Daily Wear</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=men">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="Men's Collection">
+              <span class="view-all-link">View All Men →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Fabrics -->
+      <li class="nav-item">
+        <a href="collections.html?cat=fabrics" class="nav-link">
+          Fabrics
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-2">
+          <div class="mega-col">
+            <h4>Essentials</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">2 Piece</a></li>
+              <li><a href="collections.html?cat=fabrics">3 Piece</a></li>
+            </ul>
+          </div>
+          <div class="mega-col">
+            <h4>Signature</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">2 Piece</a></li>
+              <li><a href="collections.html?cat=fabrics">3 Piece</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=fabrics">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="Fabrics">
+              <span class="view-all-link">View All Fabrics →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <!-- Sale -->
+      <li class="nav-item">
+        <a href="collections.html?cat=sale" class="nav-link nav-sale">
+          Sale
+          <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="mega-menu grid-1">
+          <div class="mega-col">
+            <h4>Sale</h4>
+            <ul>
+              <li><a href="collections.html?cat=fabrics">Fabrics</a></li>
+              <li><a href="collections.html?cat=ready-to-wear">Ready To Wear</a></li>
+              <li><a href="collections.html?cat=sale">Tailored</a></li>
+            </ul>
+          </div>
+          <div class="mega-thumb">
+            <a href="collections.html?cat=sale">
+              <img src="https://us.junaidjamshed.com/cdn/shop/files/26-3841_1.jpg?v=1770011691" alt="Sale" style="height:140px;">
+              <span class="view-all-link" style="color:#FF5C35;">View All Sale →</span>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Now Happening -->
+      <li class="nav-item">
+        <a href="collections.html?cat=all" class="nav-link">Now Happening</a>
+      </li>
+
+    </ul>
+  </nav>
+</header>
+
+<!-- Mobile Nav Drawer -->
+<div class="mobile-nav-drawer" id="mobileNavDrawer">
+  <div class="mnd-hd">
+    <span class="mnd-logo">YOUR BRAND</span>
+    <button class="mnd-close" id="mobileNavClose">×</button>
+  </div>
+  <div class="mnd-items">
+    <div class="mnd-item">
+      <a href="collections.html?cat=new-in" class="orange">
+        New In
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </div>
+    <div class="mnd-item">
+      <a href="collections.html?cat=all">From Ramadan to Eid</a>
+    </div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">
+        Women
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=women">All Women</a>
+        <a href="collections.html?cat=women">Kurta</a>
+        <a href="collections.html?cat=women">3 Piece</a>
+        <a href="collections.html?cat=women">Unstitched</a>
+      </div>
+    </div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">
+        Men
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=men">All Men</a>
+        <a href="collections.html?cat=men">Kameez Shalwar</a>
+        <a href="collections.html?cat=men">Kurta</a>
+        <a href="collections.html?cat=men">Special Kurta</a>
+      </div>
+    </div>
+    <div class="mnd-item">
+      <a href="#" class="mnd-toggle">
+        Fabrics
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+      <div class="mnd-sub">
+        <a href="collections.html?cat=fabrics">All Fabrics</a>
+        <a href="collections.html?cat=fabrics">Essentials</a>
+        <a href="collections.html?cat=fabrics">Signature</a>
+      </div>
+    </div>
+    <div class="mnd-item">
+    </div>
+    <div class="mnd-item">
+      <a href="collections.html?cat=sale" class="orange">Sale</a>
+    </div>
+    <div class="mnd-item">
+      <a href="collections.html?cat=all">Now Happening</a>
+    </div>
+    <div class="mnd-item">
+      <a href="about.html">About Us</a>
+    </div>
+    <div class="mnd-item">
+      <a href="account.html">Login / Register</a>
+    </div>
+    <div class="mnd-item">
+      <a href="#">Track Your Order</a>
+    </div>
+    <div class="mnd-item">
+      <a href="#">Find Stores</a>
+    </div>
+  </div>
+</div>
+<div class="drawer-overlay" id="mobileNavOverlay"></div>
+
+<!-- ═══════════════════════════════════════════════════════
+     HERO SLIDER — Split-panel Women & Men slides
+═══════════════════════════════════════════════════════ -->
+<section class="hero-slider" aria-label="Featured collections">
+  <div class="slider-track">
+
+    <!-- Slide 1: WOMEN — Chiffon Formal -->
+    <div class="hero-slide">
+      <div class="slide-text" style="background:#FDF6EF; color:#2D2B2A;">
+        <span class="slide-gender-tag" style="background:#F4EDE4; color:#7B4F3A;">Women</span>
+        <h2 class="slide-title">New Season<br>Formal Wear</h2>
+        <p class="slide-sub">Luxurious chiffon & embroidered<br>3-piece sets for every celebration.</p>
+        <a href="collections.html?cat=women" class="slide-cta" style="color:#2D2B2A; border-color:#2D2B2A;">
+          Shop Women &nbsp;→
+        </a>
+      </div>
+      <div class="slide-img">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JLS-26-568_1.jpg?v=1770459212"
+          alt="Women's Chiffon 3-Piece" loading="eager">
+      </div>
+    </div>
+
+    <!-- Slide 2: MEN — Kameez Shalwar -->
+    <div class="hero-slide">
+      <div class="slide-text" style="background:#1C1C1C; color:#F5F5F5;">
+        <span class="slide-gender-tag" style="background:#2E2E2E; color:#C8C8C8;">Men</span>
+        <h2 class="slide-title">Classic<br>Kameez Shalwar</h2>
+        <p class="slide-sub">Refined blended fabric with clean<br>stitching for everyday elegance.</p>
+        <a href="collections.html?cat=men" class="slide-cta" style="color:#F5F5F5; border-color:#F5F5F5;">
+          Shop Men &nbsp;→
+        </a>
+      </div>
+      <div class="slide-img">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289"
+          alt="Men's Black Kameez Shalwar" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Slide 3: WOMEN — Lawn Kurti -->
+    <div class="hero-slide">
+      <div class="slide-text" style="background:#1A3328; color:#F0EDE8;">
+        <span class="slide-gender-tag" style="background:#244536; color:#A8C5A0;">Women</span>
+        <h2 class="slide-title">Lawn<br>New Arrivals</h2>
+        <p class="slide-sub">Fresh prints & vibrant colours.<br>Lightweight, breathable everyday kurtas.</p>
+        <a href="collections.html?cat=women" class="slide-cta" style="color:#F0EDE8; border-color:#F0EDE8;">
+          Shop Women &nbsp;→
+        </a>
+      </div>
+      <div class="slide-img">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/26-625_1.jpg?v=1770459496"
+          alt="Women's Red Lawn Kurti" loading="lazy">
+      </div>
+    </div>
+
+    <!-- Slide 4: MEN — Festive Special Kurta -->
+    <div class="hero-slide">
+      <div class="slide-text" style="background:#2C1A00; color:#F5EDD8;">
+        <span class="slide-gender-tag" style="background:#3D2800; color:#D4A84B;">Men</span>
+        <h2 class="slide-title">Eid &amp;<br>Festive Kurta</h2>
+        <p class="slide-sub">Opulent blended fabric with fine<br>embellishments for special occasions.</p>
+        <a href="collections.html?cat=men" class="slide-cta" style="color:#F5EDD8; border-color:#F5EDD8;">
+          Shop Men &nbsp;→
+        </a>
+      </div>
+      <div class="slide-img">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKSP-50438_1.jpg?v=1767179519"
+          alt="Men's Golden Green Special Kurta" loading="lazy">
+      </div>
+    </div>
+
+  </div>
+
+  <button class="slider-btn prev" aria-label="Previous">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <button class="slider-btn next" aria-label="Next">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="slider-dots">
+    <div class="slider-dot active"></div>
+    <div class="slider-dot"></div>
+    <div class="slider-dot"></div>
+    <div class="slider-dot"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     INFO STRIP (3 items — exactly like real site)
+═══════════════════════════════════════════════════════ -->
+<div class="info-strip">
+  <div class="info-strip-inner container-sm">
+    <div class="info-item">
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="1" y="3" width="15" height="13" rx="1"/>
+          <path d="M16 8h4l3 3v5h-7z"/>
+          <circle cx="5.5" cy="18.5" r="2.5"/>
+          <circle cx="18.5" cy="18.5" r="2.5"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <strong>Shipping Charges</strong>
+        <span>Starting from Rs. 120</span>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 17H7A5 5 0 017 7h2"/>
+          <path d="M15 7h2a5 5 0 010 10h-2"/>
+          <line x1="8" y1="12" x2="16" y2="12"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <strong>Track Your Order</strong>
+        <span>Check status of your order</span>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+      <div class="info-text">
+        <strong>Find Stores</strong>
+        <span>Stores countrywide — Pakistan, UK, UAE, US</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     TOP PICKS FOR YOU
+═══════════════════════════════════════════════════════ -->
+<section style="padding:0 0 60px;">
+  <div class="container-sm">
+    <div class="section-hd">
+      <h2>Top Picks for You</h2>
+      <p>We've handpicked the styles we know you'll love. Explore what's trending now.</p>
+    </div>
+
+    <!-- Category pills -->
+    <div class="cat-strip">
+      <a href="collections.html?cat=all"            class="cat-pill active">All</a>
+      <a href="collections.html?cat=women"          class="cat-pill">Women</a>
+      <a href="collections.html?cat=men"            class="cat-pill">Men</a>
+      <a href="collections.html?cat=fabrics"        class="cat-pill">Fabrics</a>
+      <a href="collections.html?cat=new-in"         class="cat-pill">New In</a>
+      <a href="collections.html?cat=sale"           class="cat-pill" style="color:#FF5C35;">Sale</a>
+    </div>
+
+    <div class="products-grid" id="topPicksGrid">
+      <!-- JS renders here -->
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="collections.html?cat=all" class="btn-view-more" style="margin-top:36px;">View All</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     BESTSELLERS
+═══════════════════════════════════════════════════════ -->
+<section style="padding:0 0 60px;background:#FAFAFA;">
+  <div class="container-sm">
+    <div class="section-hd" style="padding-top:48px;">
+      <h2>Bestsellers</h2>
+      <p>Discover this season's favorites and refresh your style with looks you'll wear on repeat.</p>
+    </div>
+
+    <div class="products-grid" id="bestsellersGrid">
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+      <div class="skel" style="aspect-ratio:2/3;"></div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="collections.html?cat=ready-to-wear" class="btn-view-more" style="margin-top:36px;">See All Bestsellers</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SHOP BY GENDER — Women & Men
+═══════════════════════════════════════════════════════ -->
+<section style="padding:60px 0;">
+  <div class="container-sm">
+    <div class="section-hd">
+      <h2>Shop by Category</h2>
+      <p>Explore our full range of ethnic wear for women and men — from casual everyday kurtas to formal festive sets.</p>
+    </div>
+    <div class="banner-grid-2">
+      <a href="collections.html?cat=women" class="banner-tile">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JLS-26-568_1.jpg?v=1770459212" alt="Women's Collection" style="height:480px;">
+        <div class="tile-label">
+          <h3>Women</h3>
+          <p>Kurtas · 3-Piece · Lawn · Chiffon Formals</p>
+          <span class="tile-btn">Shop Women</span>
+        </div>
+      </a>
+      <a href="collections.html?cat=men" class="banner-tile">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="Men's Collection" style="height:480px;">
+        <div class="tile-label">
+          <h3>Men</h3>
+          <p>Kameez Shalwar · Casual Kurta · Special Kurta</p>
+          <span class="tile-btn">Shop Men</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- ═══════════════════════════════════════════════════════
+     SALE BANNER + MORE CATEGORIES
+═══════════════════════════════════════════════════════ -->
+<section style="padding:60px 0;">
+  <div class="container-sm">
+    <div class="banner-grid-3">
+      <a href="collections.html?cat=sale" class="banner-tile">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JLS-26-534_1.jpg?v=1770459197" alt="Sale" style="height:380px;">
+        <div class="tile-label" style="background:linear-gradient(to top,rgba(255,92,53,0.7) 0%,transparent 60%)">
+          <h3>Sale</h3>
+          <p>Up to 50% off selected styles</p>
+          <span class="tile-btn" style="background:#FF5C35;color:#fff;">Shop Sale</span>
+        </div>
+      </a>
+      <a href="collections.html?cat=new-in" class="banner-tile">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/JJKS-47585_1.jpg?v=1770017289" alt="New In" style="height:380px;">
+        <div class="tile-label">
+          <h3>New In</h3>
+          <p>Freshest arrivals of the season</p>
+          <span class="tile-btn">Explore</span>
+        </div>
+      </a>
+      <a href="collections.html?cat=all" class="banner-tile">
+        <img src="https://us.junaidjamshed.com/cdn/shop/files/26-3841_1.jpg?v=1770011691" alt="Eid Collection" style="height:380px;">
+        <div class="tile-label">
+          <h3>Ramadan to Eid</h3>
+          <p>Celebrate with grace and elegance</p>
+          <span class="tile-btn">Shop Now</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     NEWSLETTER
+═══════════════════════════════════════════════════════ -->
+<section class="newsletter-section">
+  <div class="container-sm">
+    <h2>Get the Latest News</h2>
+    <p>Subscribe to hear about exclusive collections, early access, and special promotions.</p>
+    <form class="nl-form js-nl-form" onsubmit="return false;">
+      <input type="email" placeholder="Email Address">
+      <button type="submit">Confirm</button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container-sm">
+    <div class="footer-grid">
+
+      <!-- Help -->
+      <div class="footer-col">
+        <div class="footer-col-title">Help</div>
+        <ul>
+          <li><a href="#">Frequently Asked Questions</a></li>
+          <li><a href="#">Terms &amp; Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Disclaimer</a></li>
+        </ul>
+      </div>
+
+      <!-- More from Your Brand -->
+      <div class="footer-col">
+        <div class="footer-col-title">More From Your Brand</div>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="#">Blogs</a></li>
+          <li><a href="#">Cloth Care</a></li>
+        </ul>
+      </div>
+
+      <!-- Get in touch -->
+      <div class="footer-col">
+        <div class="footer-col-title">Get in Touch</div>
+        <div class="footer-address">
+          
+          
+          Pakistan · UK · UAE · US<br><br>
+          <a href="mailto:hello@tryinstantfit.com" style="color:rgba(255,255,255,0.65);transition:color 0.2s;" onmouseover="this.style.color='#FF5C35'" onmouseout="this.style.color='rgba(255,255,255,0.65)'">hello@tryinstantfit.com</a><br><br>
+          <a href="#" style="color:rgba(255,255,255,0.65);">Track Your Order</a><br>
+          <a href="#" style="color:rgba(255,255,255,0.65);margin-top:4px;display:block;">Find Stores</a>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <div class="footer-col-title">Get the Latest News</div>
+        <form class="footer-nl-form js-nl-form" onsubmit="return false;" style="margin-bottom:16px;">
+          <input type="email" placeholder="Email Address">
+          <button type="submit">Confirm</button>
+        </form>
+        <p style="font-size:12px;color:rgba(255,255,255,0.35);line-height:1.5;">By subscribing you agree to our Privacy Policy. Unsubscribe anytime.</p>
+      </div>
+
+    </div>
+
+    <!-- Footer bottom -->
+    <div class="footer-bottom">
+      <div class="footer-social">
+        <!-- TikTok -->
+        <a href="#" target="_blank" class="social-icon" aria-label="TikTok">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.74a4.85 4.85 0 01-1.01-.05z"/></svg>
+        </a>
+        <!-- YouTube -->
+        <a href="#" target="_blank" class="social-icon" aria-label="YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 00-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 00-1.95 1.96A29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.41 19.54C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 001.95-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58zM9.75 15.02V8.98L15.5 12l-5.75 3.02z"/></svg>
+        </a>
+        <!-- Facebook -->
+        <a href="#" target="_blank" class="social-icon" aria-label="Facebook">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <!-- Instagram -->
+        <a href="#" target="_blank" class="social-icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        </a>
+      </div>
+
+      <!-- Payment icons -->
+      <div class="footer-payment">
+        <span class="payment-badge">VISA</span>
+        <span class="payment-badge">Mastercard</span>
+        <span class="payment-badge">Amex</span>
+        <span class="payment-badge">UnionPay</span>
+        <span class="payment-badge" style="color:#27AE60;">🔒 100% Safe Checkout</span>
+      </div>
+
+      <div class="footer-copy">
+        Copyright © 2026 Try Instant Fit. All Rights Reserved.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="drawer-hd">
+    <h3>My Bag</h3>
+    <button class="drawer-close" id="cartDrawerClose" aria-label="Close">×</button>
+  </div>
+  <div class="drawer-body" id="cartDrawerBody">
+    <div style="text-align:center;padding:60px 16px;color:#8F8F8F;">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin:0 auto 16px;display:block;">
+        <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+      </svg>
+      <p style="font-size:15px;font-weight:600;color:#2D2B2A;margin-bottom:8px;">Your bag is empty</p>
+    </div>
+  </div>
+  <div class="drawer-foot">
+    <div class="drawer-total">
+      <span>Subtotal</span>
+      <span id="cartDrawerTotal">PKR 0</span>
+    </div>
+    <p style="font-size:12px;color:#8F8F8F;margin-bottom:14px;">Shipping calculated at checkout. Free delivery on orders above PKR 3,000.</p>
+    <a href="cart.html" style="display:flex;align-items:center;justify-content:center;width:100%;height:46px;border:1.5px solid #DCDBDB;border-radius:30px;font-size:13px;font-weight:600;color:#2D2B2A;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.06em;transition:all 0.2s;" onmouseover="this.style.background='#f5f5f5'" onmouseout="this.style.background=''">View Bag</a>
+    <button class="btn-checkout" onclick="window.location.href='cart.html'">Checkout</button>
+  </div>
+</div>
+<div class="drawer-overlay" id="cartOverlay"></div>
+
+<!-- Chat widget -->
+<button class="chat-btn" onclick="alert('Live chat support via Salesforce would load here')" title="Live Chat">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+</button>
+
+<!-- Back to top -->
+<button id="backTop" class="back-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<script src="js/main.js"></script>
+</body>
+</html>
