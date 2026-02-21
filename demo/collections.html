@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Collections | Your Brand</title>
   <link rel="stylesheet" href="css/main.css">
-  <link rel="icon" href="#">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
 
@@ -402,6 +402,11 @@
         </div>
       </div>
 
+      <!-- Mobile apply button (shown only on mobile) -->
+      <div class="filter-mobile-footer">
+        <button class="btn-see-results" id="filterApplyBtn">Show Results</button>
+      </div>
+
     </aside>
 
     <!-- Main Products Area -->
@@ -413,7 +418,11 @@
 
         <div class="coll-toolbar">
           <span class="coll-count" id="collCount">0 items</span>
-          <div style="display:flex;align-items:center;gap:10px;">
+          <div style="display:flex;align-items:center;gap:8px;">
+            <button class="mobile-filter-btn" id="mobileFilterBtn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+              Filters
+            </button>
             <div class="view-tog">
               <button class="vt-btn active" id="vt4" title="4-column grid" onclick="setView(4)">
                 <svg viewBox="0 0 20 20" fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="5" y="0" width="4" height="4"/><rect x="10" y="0" width="4" height="4"/><rect x="15" y="0" width="4" height="4"/><rect x="0" y="5" width="4" height="4"/><rect x="5" y="5" width="4" height="4"/><rect x="10" y="5" width="4" height="4"/><rect x="15" y="5" width="4" height="4"/></svg>
@@ -517,6 +526,9 @@
     </div>
   </div>
 </footer>
+
+<!-- Filter Sheet Overlay -->
+<div class="filter-sheet-overlay" id="filterSheetOverlay"></div>
 
 <!-- Cart Drawer -->
 <div class="cart-drawer" id="cartDrawer">
@@ -780,6 +792,27 @@
     document.getElementById('bc-cat').textContent = label;
     document.title = label + ' | Your Brand';
     renderCollections();
+
+    // ── Mobile filter sheet ──
+    const filterSidebar = document.getElementById('filterSidebar');
+    const filterSheetOverlay = document.getElementById('filterSheetOverlay');
+    const mobileFilterBtn = document.getElementById('mobileFilterBtn');
+    const filterApplyBtn = document.getElementById('filterApplyBtn');
+
+    function openFilterSheet() {
+      filterSidebar.classList.add('open');
+      filterSheetOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeFilterSheet() {
+      filterSidebar.classList.remove('open');
+      filterSheetOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    if (mobileFilterBtn) mobileFilterBtn.addEventListener('click', openFilterSheet);
+    if (filterApplyBtn) filterApplyBtn.addEventListener('click', closeFilterSheet);
+    if (filterSheetOverlay) filterSheetOverlay.addEventListener('click', closeFilterSheet);
   });
 </script>
 </body>
