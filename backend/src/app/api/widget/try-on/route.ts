@@ -62,11 +62,10 @@ export async function POST(request: NextRequest) {
         {
           role: 'user',
           parts: [
-            // Person photo
+            { text: 'IMAGE 1 — TARGET PERSON (this is the person you must dress):' },
             { inlineData: { data: userPhotoBase64, mimeType: userPhotoFile.type } },
-            // Product/garment image
+            { text: 'IMAGE 2 — GARMENT SOURCE (extract the clothing from this image and apply it to the person above):' },
             { inlineData: { data: productBase64, mimeType: productMimeType } },
-            // Instruction
             { text: TRYON_PROMPT },
           ],
         },
