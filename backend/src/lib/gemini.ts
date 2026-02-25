@@ -43,13 +43,15 @@ export async function generateContent(requestBody: object): Promise<any> {
   return response.json();
 }
 
-export const TRYON_PROMPT = `TASK: Virtual try-on — dress the TARGET PERSON (Image 1) in the garment from the GARMENT SOURCE (Image 2).
+export const TRYON_PROMPT = `INSTRUCTIONS FOR AI TAILOR:
+1. Look at the FIRST IMAGE (the Person). This is the model who will be wearing the clothes.
+2. Look at the SECOND IMAGE (the Garment). This is the exact piece of clothing (Shalwar Kameez/Suit) to be applied.
 
-CRITICAL RULES:
-- The OUTPUT must show the PERSON from IMAGE 1. Do NOT output the person from Image 2.
-- Image 2 may show a model or mannequin wearing the garment — extract ONLY the garment, ignore that model entirely.
-- PRESERVE the face, hair, skin tone, body, pose, and background from IMAGE 1 exactly.
-- REPLACE only the clothing with the exact garment (colour, style, fabric, embroidery) from IMAGE 2.
-- Make the garment fit naturally — realistic folds, shadows, and fabric texture.
+TRANSFORMATION STEPS:
+- PERFORM A GARMENT TRANSFER: Remove the existing clothing from the Person in the first image.
+- APPLY THE NEW GARMENT: Dress the Person in the EXACT garment shown in the second image.
+- PRESERVE IDENTITY: Do not change the person's face, hair, skin tone, or body proportions.
+- PRESERVE ENVIRONMENT: Keep the background, lighting, and camera angle identical to the first image.
+- REALISM: Ensure the fabric folds, shadows, and textures (like embroidery or collar details) look 100% natural as if they were worn in the original photo.
 
-Output ONLY the final transformed image of the Image 1 person wearing the Image 2 garment.`;
+Output ONLY the transformed image.`;
