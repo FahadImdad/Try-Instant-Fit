@@ -26,7 +26,7 @@ export function getVertexAI(): VertexAI {
   return _vertexAI;
 }
 
-export const TRYON_MODEL = 'gemini-2.0-flash-exp';
+export const TRYON_MODEL = 'gemini-3-pro-image-preview';
 
 export const TRYON_PROMPT = `You are a virtual try-on AI. Generate a realistic photo showing the person wearing the garment.
 
