@@ -1,206 +1,10 @@
-"use strict";
-(() => {
-  // src/index.ts
-  var DEFAULT_API = "https://api.tryinstantfit.com";
-  var GhostLayerWidget = class {
-    constructor(brandId) {
-      this.config = null;
-      this.widgetRoot = null;
-      this.shadowRoot = null;
-      this.currentProduct = null;
-      this.brandId = brandId;
-      this.init();
-    }
-    // ─── Initialization ───────────────────────────────────────────────────────
-    async init() {
-      try {
-        console.log("[GhostLayer] Initializing widget for brand:", this.brandId);
-        await this.loadConfiguration();
-        if (!this.config?.enabled) {
-          console.log("[GhostLayer] Widget disabled for this brand");
-          return;
-        }
-        if (!this.isProductPage()) {
-          console.log("[GhostLayer] Not a product page, skipping");
-          return;
-        }
-        this.currentProduct = this.detectProduct();
-        if (!this.currentProduct) {
-          console.log("[GhostLayer] Could not detect product, skipping");
-          return;
-        }
-        console.log("[GhostLayer] Product detected:", this.currentProduct.name);
-        this.injectTryOnButton();
-        this.trackEvent("widget_loaded", { product_id: this.currentProduct.id });
-      } catch (error) {
-        console.error("[GhostLayer] Initialization error:", error);
-      }
-    }
-    async loadConfiguration() {
-      try {
-        const response = await fetch(
-          `${DEFAULT_API}/api/widget/config/${this.brandId}`,
-          { headers: { "Accept": "application/json" } }
-        );
-        if (response.ok) {
-          this.config = await response.json();
-          return;
-        }
-      } catch (_e) {
-      }
-      this.config = {
-        brandId: this.brandId,
-        apiEndpoint: DEFAULT_API,
-        buttonText: "Try It On \u2728",
-        buttonColor: "#1a1a2e",
-        buttonPosition: "bottom-right",
-        enabled: true
-      };
-    }
-    // ─── Product Page Detection ────────────────────────────────────────────────
-    isProductPage() {
-      const schemaScripts = document.querySelectorAll('script[type="application/ld+json"]');
-      for (const script of Array.from(schemaScripts)) {
-        try {
-          const data = JSON.parse(script.textContent || "");
-          const items = Array.isArray(data) ? data : [data];
-          if (items.some((item) => item["@type"] === "Product"))
-            return true;
-        } catch (_e) {
-        }
-      }
-      const ogType = document.querySelector('meta[property="og:type"]')?.getAttribute("content");
-      if (ogType && ogType.toLowerCase().includes("product"))
-        return true;
-      const url = window.location.pathname.toLowerCase();
-      const urlPatterns = ["/product/", "/products/", "/p/", "/item/", "/shop/", "/clothing/"];
-      if (urlPatterns.some((p) => url.includes(p)))
-        return true;
-      const hasPrice = !!(document.querySelector('[class*="price"]') || document.querySelector('[itemprop="price"]'));
-      const hasAddToCart = !!(document.querySelector('[class*="add-to-cart"]') || document.querySelector('[class*="addtocart"]') || document.querySelector('button[name="add"]'));
-      const hasProductImage = !!(document.querySelector('[class*="product-image"]') || document.querySelector('[class*="product-gallery"]'));
-      return hasPrice && (hasAddToCart || hasProductImage);
-    }
-    // ─── Product Detection ─────────────────────────────────────────────────────
-    detectProduct() {
-      return this.extractFromSchema() || this.extractFromOpenGraph() || this.extractFromDOM();
-    }
-    extractFromSchema() {
-      const scripts = document.querySelectorAll('script[type="application/ld+json"]');
-      for (const script of Array.from(scripts)) {
-        try {
-          const data = JSON.parse(script.textContent || "");
-          const items = Array.isArray(data) ? data : [data];
-          const productData = items.find((item) => item["@type"] === "Product");
-          if (!productData)
-            continue;
-          const rawImage = productData.image;
-          const imageUrl = Array.isArray(rawImage) ? rawImage[0] : rawImage;
-          if (!imageUrl)
-            continue;
-          return {
-            id: productData.sku || productData["@id"] || this.generateProductId(),
-            name: productData.name || document.title,
-            imageUrl,
-            price: productData.offers?.price?.toString(),
-            url: window.location.href
-          };
-        } catch (_e) {
-        }
-      }
-      return null;
-    }
-    extractFromOpenGraph() {
-      const image = document.querySelector('meta[property="og:image"]')?.getAttribute("content");
-      const title = document.querySelector('meta[property="og:title"]')?.getAttribute("content");
-      if (image && title) {
-        return {
-          id: this.generateProductId(),
-          name: title,
-          imageUrl: image,
-          url: window.location.href
-        };
-      }
-      return null;
-    }
-    extractFromDOM() {
-      const imageSelectors = [
-        ".product-image img",
-        ".product-gallery img",
-        ".product-single__media img",
-        ".product-featured-image img",
-        ".woocommerce-product-gallery__image img",
-        "[data-product-image] img",
-        '[class*="product"] img',
-        "main img"
-      ];
-      let imageUrl = "";
-      for (const selector of imageSelectors) {
-        const img = document.querySelector(selector);
-        if (img?.src && !this.isPlaceholderImage(img.src)) {
-          imageUrl = img.src;
-          break;
-        }
-      }
-      const nameSelectors = [
-        'h1[class*="product"]',
-        '[class*="product-title"]',
-        '[class*="product-name"]',
-        '[itemprop="name"]',
-        "h1"
-      ];
-      let name = "";
-      for (const selector of nameSelectors) {
-        const el = document.querySelector(selector);
-        if (el?.textContent?.trim()) {
-          name = el.textContent.trim();
-          break;
-        }
-      }
-      if (imageUrl && name) {
-        return {
-          id: this.generateProductId(),
-          name,
-          imageUrl,
-          url: window.location.href
-        };
-      }
-      return null;
-    }
-    isPlaceholderImage(url) {
-      const lower = url.toLowerCase();
-      return lower.includes("placeholder") || lower.includes("no-image") || lower.includes("noimage") || lower.includes("icon") || lower.includes("logo");
-    }
-    generateProductId() {
-      return btoa(window.location.pathname).replace(/[^a-zA-Z0-9]/g, "").substring(0, 16);
-    }
-    // ─── UI Injection ──────────────────────────────────────────────────────────
-    injectTryOnButton() {
-      this.widgetRoot = document.createElement("div");
-      this.widgetRoot.id = "ghostlayer-widget-root";
-      document.body.appendChild(this.widgetRoot);
-      this.shadowRoot = this.widgetRoot.attachShadow({ mode: "open" });
-      this.shadowRoot.innerHTML = this.getButtonHTML();
-      const btn = this.shadowRoot.getElementById("gl-try-btn");
-      btn?.addEventListener("click", () => this.openOverlay());
-    }
-    getButtonHTML() {
-      const color = this.config?.buttonColor || "#1a1a2e";
-      const text = this.config?.buttonText || "Try It On \u2728";
-      const pos = this.config?.buttonPosition || "bottom-right";
-      const posStyles = {
-        "bottom-right": "bottom: 24px; right: 24px;",
-        "bottom-left": "bottom: 24px; left: 24px;",
-        "top-right": "top: 24px; right: 24px;",
-        "top-left": "top: 24px; left: 24px;"
-      };
-      return `
+"use strict";(()=>{var p="https://backend-psi-peach.vercel.app",u=class{constructor(e){this.config=null;this.widgetRoot=null;this.shadowRoot=null;this.currentProduct=null;this.brandId=e,this.init()}async init(){try{if(console.log("[GhostLayer] Initializing widget for brand:",this.brandId),await this.loadConfiguration(),!this.config?.enabled){console.log("[GhostLayer] Widget disabled for this brand");return}if(!this.isProductPage()){console.log("[GhostLayer] Not a product page, skipping");return}if(this.currentProduct=this.detectProduct(),!this.currentProduct){console.log("[GhostLayer] Could not detect product, skipping");return}console.log("[GhostLayer] Product detected:",this.currentProduct.name),this.injectTryOnButton(),this.trackEvent("widget_loaded",{product_id:this.currentProduct.id})}catch(e){console.error("[GhostLayer] Initialization error:",e)}}async loadConfiguration(){try{let e=await fetch(`${p}/api/widget/config/${this.brandId}`,{headers:{Accept:"application/json"}});if(e.ok){this.config=await e.json();return}}catch{}this.config={brandId:this.brandId,apiEndpoint:p,buttonText:"Try It On \u2728",buttonColor:"#1a1a2e",buttonPosition:"bottom-right",enabled:!0}}isProductPage(){let e=document.querySelectorAll('script[type="application/ld+json"]');for(let l of Array.from(e))try{let d=JSON.parse(l.textContent||"");if((Array.isArray(d)?d:[d]).some(c=>c["@type"]==="Product"))return!0}catch{}let t=document.querySelector('meta[property="og:type"]')?.getAttribute("content");if(t&&t.toLowerCase().includes("product"))return!0;let r=window.location.pathname.toLowerCase(),o=window.location.search.toLowerCase();if(["/product/","/products/","/p/","/item/","/shop/","/clothing/","product.html"].some(l=>r.includes(l))||o.includes("id=")&&r.includes("product"))return!0;let i=!!(document.querySelector('[class*="price"]')||document.querySelector('[itemprop="price"]')),a=!!(document.querySelector('[class*="add-to-cart"]')||document.querySelector('[class*="addtocart"]')||document.querySelector('button[name="add"]')),g=!!(document.querySelector('[class*="product-image"]')||document.querySelector('[class*="product-gallery"]'));return i&&(a||g)}detectProduct(){return this.extractFromSchema()||this.extractFromOpenGraph()||this.extractFromDOM()}extractFromSchema(){let e=document.querySelectorAll('script[type="application/ld+json"]');for(let t of Array.from(e))try{let r=JSON.parse(t.textContent||""),n=(Array.isArray(r)?r:[r]).find(g=>g["@type"]==="Product");if(!n)continue;let i=n.image,a=Array.isArray(i)?i[0]:i;if(!a)continue;return{id:n.sku||n["@id"]||this.generateProductId(),name:n.name||document.title,imageUrl:a,price:n.offers?.price?.toString(),url:window.location.href}}catch{}return null}extractFromOpenGraph(){let e=document.querySelector('meta[property="og:image"]')?.getAttribute("content"),t=document.querySelector('meta[property="og:title"]')?.getAttribute("content");return e&&t?{id:this.generateProductId(),name:t,imageUrl:e,url:window.location.href}:null}extractFromDOM(){let e=["#pd-main-img","#product-featured-image",".product-image img",".product-gallery img",".product-single__media img",".product-featured-image img",".woocommerce-product-gallery__image img","[data-product-image] img",'[class*="pd-main"] img','[class*="product"] img',"main img"],t="";for(let n of e){let i=document.querySelector(n);if(!i)continue;let a=i.tagName==="IMG"?i:i.querySelector("img");if(a?.src&&!this.isPlaceholderImage(a.src)){t=a.src;break}}let r=["#pd-name",'h1[class*="product"]','[class*="product-title"]','[class*="product-name"]','[itemprop="name"]',"h1"],o="";for(let n of r){let i=document.querySelector(n);if(i?.textContent?.trim()){o=i.textContent.trim();break}}return t&&o?{id:this.generateProductId(),name:o,imageUrl:t,url:window.location.href}:null}isPlaceholderImage(e){let t=e.toLowerCase();return t.includes("placeholder")||t.includes("no-image")||t.includes("noimage")||t.includes("icon")||t.includes("logo")}generateProductId(){return btoa(window.location.pathname).replace(/[^a-zA-Z0-9]/g,"").substring(0,16)}injectTryOnButton(){this.widgetRoot=document.createElement("div"),this.widgetRoot.id="ghostlayer-widget-root",document.body.appendChild(this.widgetRoot),this.shadowRoot=this.widgetRoot.attachShadow({mode:"open"}),this.shadowRoot.innerHTML=this.getButtonHTML(),this.shadowRoot.getElementById("gl-try-btn")?.addEventListener("click",()=>this.openOverlay())}getButtonHTML(){let e=this.config?.buttonColor||"#1a1a2e",t=this.config?.buttonText||"Try It On \u2728",r=this.config?.buttonPosition||"bottom-right",o={"bottom-right":"bottom: 24px; right: 24px;","bottom-left":"bottom: 24px; left: 24px;","top-right":"top: 24px; right: 24px;","top-left":"top: 24px; left: 24px;"};return`
       <style>
         * { box-sizing: border-box; }
         #gl-try-btn {
           position: fixed;
-          ${posStyles[pos] || posStyles["bottom-right"]}
-          background: ${color};
+          ${o[r]||o["bottom-right"]}
+          background: ${e};
           color: #fff;
           border: none;
           border-radius: 50px;
@@ -222,97 +26,8 @@
           transform: translateY(0);
         }
       </style>
-      <button id="gl-try-btn">${text}</button>
-    `;
-    }
-    // ─── Overlay ───────────────────────────────────────────────────────────────
-    openOverlay() {
-      this.trackEvent("tryon_opened", { product_id: this.currentProduct?.id });
-      this.renderOverlay("upload");
-    }
-    renderOverlay(step, data) {
-      const existing = this.shadowRoot?.getElementById("gl-overlay");
-      if (existing)
-        existing.remove();
-      const overlay = document.createElement("div");
-      overlay.id = "gl-overlay";
-      overlay.innerHTML = this.getOverlayHTML(step, data);
-      this.shadowRoot?.appendChild(overlay);
-      this.bindOverlayEvents(step);
-    }
-    getOverlayHTML(step, data) {
-      const productName = this.currentProduct?.name || "this item";
-      const productImage = this.currentProduct?.imageUrl || "";
-      const stepContent = {
-        upload: `
-        <div class="gl-card">
-          <div class="gl-header">
-            <div class="gl-logo">\u2728 Try It On</div>
-            <button class="gl-close" id="gl-close">\u2715</button>
-          </div>
-
-          <div class="gl-product-preview">
-            ${productImage ? `<img src="${productImage}" alt="${productName}" class="gl-product-img" />` : ""}
-            <div class="gl-product-name">${productName}</div>
-          </div>
-
-          <div class="gl-divider"></div>
-
-          <p class="gl-subtitle">Upload your photo to see how this looks on you</p>
-
-          <div class="gl-upload-zone" id="gl-upload-zone">
-            <div class="gl-upload-icon">\u{1F4F8}</div>
-            <div class="gl-upload-text">Click to upload your photo</div>
-            <div class="gl-upload-hint">or drag & drop here \xB7 JPG, PNG \xB7 Max 10MB</div>
-            <input type="file" id="gl-file-input" accept="image/jpeg,image/png,image/webp" hidden />
-          </div>
-
-          <div class="gl-preview-wrap" id="gl-preview-wrap" style="display:none">
-            <img id="gl-preview-img" class="gl-preview-img" src="" alt="Your photo" />
-            <button class="gl-change-btn" id="gl-change-photo">Change photo</button>
-          </div>
-
-          <button class="gl-primary-btn" id="gl-generate-btn" disabled>
-            Generate Try-On
-          </button>
-
-          <p class="gl-privacy">\u{1F512} Your photo is never stored. Processed securely and deleted immediately.</p>
-        </div>
-      `,
-        processing: `
-        <div class="gl-card gl-center">
-          <div class="gl-spinner"></div>
-          <div class="gl-processing-title">Creating your look...</div>
-          <div class="gl-processing-sub">Our AI is styling you right now \u2728</div>
-          <div class="gl-progress-bar"><div class="gl-progress-fill"></div></div>
-        </div>
-      `,
-        result: `
-        <div class="gl-card">
-          <div class="gl-header">
-            <div class="gl-logo">\u2728 Your Look</div>
-            <button class="gl-close" id="gl-close">\u2715</button>
-          </div>
-          <img src="${data?.resultUrl || ""}" alt="Virtual try-on result" class="gl-result-img" />
-          <div class="gl-result-actions">
-            <a href="${data?.resultUrl || "#"}" download="my-look.jpg" class="gl-secondary-btn">\u2B07 Download</a>
-            <button class="gl-secondary-btn" id="gl-retry">Try Another Photo</button>
-            <button class="gl-primary-btn" id="gl-buy-btn">Add to Cart</button>
-          </div>
-          <p class="gl-privacy">Powered by <strong>Try Instant Fit</strong></p>
-        </div>
-      `,
-        error: `
-        <div class="gl-card gl-center">
-          <div class="gl-error-icon">\u26A0\uFE0F</div>
-          <div class="gl-error-title">Something went wrong</div>
-          <div class="gl-error-msg">${data?.errorMsg || "Please try again with a clear, front-facing photo."}</div>
-          <button class="gl-primary-btn" id="gl-retry">Try Again</button>
-          <button class="gl-ghost-btn" id="gl-close">Close</button>
-        </div>
-      `
-      };
-      return `
+      <button id="gl-try-btn">${t}</button>
+    `}openOverlay(){this.trackEvent("tryon_opened",{product_id:this.currentProduct?.id}),this.renderOverlay("upload")}renderOverlay(e,t){let r=this.shadowRoot?.getElementById("gl-overlay");r&&r.remove();let o=document.createElement("div");o.id="gl-overlay",o.innerHTML=this.getOverlayHTML(e,t),this.shadowRoot?.appendChild(o),this.bindOverlayEvents(e)}getOverlayHTML(e,t){let r=this.currentProduct?.name||"this item",o=this.currentProduct?.imageUrl||"";return`
       <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -568,167 +283,69 @@
       </style>
 
       <div id="gl-overlay">
-        ${stepContent[step]}
+        ${{upload:`
+        <div class="gl-card">
+          <div class="gl-header">
+            <div class="gl-logo">\u2728 Try It On</div>
+            <button class="gl-close" id="gl-close">\u2715</button>
+          </div>
+
+          <div class="gl-product-preview">
+            ${o?`<img src="${o}" alt="${r}" class="gl-product-img" />`:""}
+            <div class="gl-product-name">${r}</div>
+          </div>
+
+          <div class="gl-divider"></div>
+
+          <p class="gl-subtitle">Upload your photo to see how this looks on you</p>
+
+          <div class="gl-upload-zone" id="gl-upload-zone">
+            <div class="gl-upload-icon">\u{1F4F8}</div>
+            <div class="gl-upload-text">Click to upload your photo</div>
+            <div class="gl-upload-hint">or drag & drop here \xB7 JPG, PNG \xB7 Max 10MB</div>
+            <input type="file" id="gl-file-input" accept="image/jpeg,image/png,image/webp" hidden />
+          </div>
+
+          <div class="gl-preview-wrap" id="gl-preview-wrap" style="display:none">
+            <img id="gl-preview-img" class="gl-preview-img" src="" alt="Your photo" />
+            <button class="gl-change-btn" id="gl-change-photo">Change photo</button>
+          </div>
+
+          <button class="gl-primary-btn" id="gl-generate-btn" disabled>
+            Generate Try-On
+          </button>
+
+          <p class="gl-privacy">\u{1F512} Your photo is never stored. Processed securely and deleted immediately.</p>
+        </div>
+      `,processing:`
+        <div class="gl-card gl-center">
+          <div class="gl-spinner"></div>
+          <div class="gl-processing-title">Creating your look...</div>
+          <div class="gl-processing-sub">Our AI is styling you right now \u2728</div>
+          <div class="gl-progress-bar"><div class="gl-progress-fill"></div></div>
+        </div>
+      `,result:`
+        <div class="gl-card">
+          <div class="gl-header">
+            <div class="gl-logo">\u2728 Your Look</div>
+            <button class="gl-close" id="gl-close">\u2715</button>
+          </div>
+          <img src="${t?.resultUrl||""}" alt="Virtual try-on result" class="gl-result-img" />
+          <div class="gl-result-actions">
+            <a href="${t?.resultUrl||"#"}" download="my-look.jpg" class="gl-secondary-btn">\u2B07 Download</a>
+            <button class="gl-secondary-btn" id="gl-retry">Try Another Photo</button>
+            <button class="gl-primary-btn" id="gl-buy-btn">Add to Cart</button>
+          </div>
+          <p class="gl-privacy">Powered by <strong>Try Instant Fit</strong></p>
+        </div>
+      `,error:`
+        <div class="gl-card gl-center">
+          <div class="gl-error-icon">\u26A0\uFE0F</div>
+          <div class="gl-error-title">Something went wrong</div>
+          <div class="gl-error-msg">${t?.errorMsg||"Please try again with a clear, front-facing photo."}</div>
+          <button class="gl-primary-btn" id="gl-retry">Try Again</button>
+          <button class="gl-ghost-btn" id="gl-close">Close</button>
+        </div>
+      `}[e]}
       </div>
-    `;
-    }
-    bindOverlayEvents(step) {
-      const root = this.shadowRoot;
-      if (!root)
-        return;
-      root.getElementById("gl-close")?.addEventListener("click", () => this.closeOverlay());
-      root.getElementById("gl-overlay")?.addEventListener("click", (e) => {
-        if (e.target.id === "gl-overlay")
-          this.closeOverlay();
-      });
-      if (step === "upload") {
-        const uploadZone = root.getElementById("gl-upload-zone");
-        const fileInput = root.getElementById("gl-file-input");
-        const generateBtn = root.getElementById("gl-generate-btn");
-        const previewWrap = root.getElementById("gl-preview-wrap");
-        const previewImg = root.getElementById("gl-preview-img");
-        const changePhotoBtn = root.getElementById("gl-change-photo");
-        let selectedFile = null;
-        const handleFile = (file) => {
-          if (!file.type.startsWith("image/"))
-            return;
-          selectedFile = file;
-          const url = URL.createObjectURL(file);
-          if (previewImg)
-            previewImg.src = url;
-          if (uploadZone)
-            uploadZone.style.display = "none";
-          if (previewWrap)
-            previewWrap.style.display = "block";
-          if (generateBtn)
-            generateBtn.disabled = false;
-        };
-        uploadZone?.addEventListener("click", () => fileInput?.click());
-        changePhotoBtn?.addEventListener("click", () => {
-          selectedFile = null;
-          if (uploadZone)
-            uploadZone.style.display = "block";
-          if (previewWrap)
-            previewWrap.style.display = "none";
-          if (generateBtn)
-            generateBtn.disabled = true;
-          fileInput?.click();
-        });
-        fileInput?.addEventListener("change", () => {
-          const file = fileInput.files?.[0];
-          if (file)
-            handleFile(file);
-        });
-        uploadZone?.addEventListener("dragover", (e) => {
-          e.preventDefault();
-          uploadZone.classList.add("gl-drag-over");
-        });
-        uploadZone?.addEventListener("dragleave", () => {
-          uploadZone.classList.remove("gl-drag-over");
-        });
-        uploadZone?.addEventListener("drop", (e) => {
-          e.preventDefault();
-          uploadZone.classList.remove("gl-drag-over");
-          const file = e.dataTransfer?.files[0];
-          if (file)
-            handleFile(file);
-        });
-        generateBtn?.addEventListener("click", async () => {
-          if (!selectedFile)
-            return;
-          await this.generateTryOn(selectedFile);
-        });
-      }
-      if (step === "result") {
-        root.getElementById("gl-retry")?.addEventListener("click", () => this.renderOverlay("upload"));
-        root.getElementById("gl-buy-btn")?.addEventListener("click", () => {
-          this.trackEvent("buy_clicked", { product_id: this.currentProduct?.id });
-          this.closeOverlay();
-          const addToCart = document.querySelector('button[name="add"]') || document.querySelector('[class*="add-to-cart"]');
-          addToCart?.click();
-        });
-      }
-      if (step === "error") {
-        root.getElementById("gl-retry")?.addEventListener("click", () => this.renderOverlay("upload"));
-      }
-    }
-    closeOverlay() {
-      this.shadowRoot?.getElementById("gl-overlay")?.remove();
-      this.trackEvent("tryon_closed", { product_id: this.currentProduct?.id });
-    }
-    // ─── Try-On Generation ─────────────────────────────────────────────────────
-    async generateTryOn(userPhoto) {
-      this.renderOverlay("processing");
-      this.trackEvent("tryon_started", { product_id: this.currentProduct?.id });
-      try {
-        const formData = new FormData();
-        formData.append("user_photo", userPhoto);
-        formData.append("product_image_url", this.currentProduct?.imageUrl || "");
-        formData.append("product_id", this.currentProduct?.id || "");
-        formData.append("product_name", this.currentProduct?.name || "");
-        formData.append("brand_id", this.brandId);
-        formData.append("source", "ghost-layer");
-        const apiEndpoint = this.config?.apiEndpoint || DEFAULT_API;
-        const response = await fetch(`${apiEndpoint}/api/widget/try-on`, {
-          method: "POST",
-          body: formData
-        });
-        if (!response.ok) {
-          const err = await response.json().catch(() => ({}));
-          throw new Error(err.error || `Server error: ${response.status}`);
-        }
-        const result = await response.json();
-        const resultUrl = result.result_url || result.resultUrl;
-        if (!resultUrl)
-          throw new Error("No result image returned");
-        this.trackEvent("tryon_completed", {
-          product_id: this.currentProduct?.id,
-          result_url: resultUrl
-        });
-        this.renderOverlay("result", { resultUrl });
-      } catch (error) {
-        console.error("[GhostLayer] Try-on generation failed:", error);
-        this.trackEvent("tryon_failed", {
-          product_id: this.currentProduct?.id,
-          error: String(error)
-        });
-        this.renderOverlay("error", {
-          errorMsg: error instanceof Error ? error.message : "Please try again."
-        });
-      }
-    }
-    // ─── Analytics ─────────────────────────────────────────────────────────────
-    async trackEvent(eventName, data) {
-      try {
-        const apiEndpoint = this.config?.apiEndpoint || DEFAULT_API;
-        await fetch(`${apiEndpoint}/api/widget/track`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            brand_id: this.brandId,
-            event_name: eventName,
-            event_data: data,
-            page_url: window.location.href,
-            timestamp: (/* @__PURE__ */ new Date()).toISOString()
-          }),
-          keepalive: true
-        });
-      } catch (_e) {
-      }
-    }
-  };
-  (function() {
-    const script = document.currentScript || document.querySelector('script[src*="ghostlayer-widget"]');
-    const brandId = script?.getAttribute("data-brand-id");
-    if (!brandId) {
-      console.warn("[GhostLayer] No data-brand-id attribute found on script tag");
-      return;
-    }
-    const initWidget = () => setTimeout(() => new GhostLayerWidget(brandId), 0);
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", initWidget);
-    } else {
-      initWidget();
-    }
-  })();
-})();
+    `}bindOverlayEvents(e){let t=this.shadowRoot;if(t){if(t.getElementById("gl-close")?.addEventListener("click",()=>this.closeOverlay()),t.getElementById("gl-overlay")?.addEventListener("click",r=>{r.target.id==="gl-overlay"&&this.closeOverlay()}),e==="upload"){let r=t.getElementById("gl-upload-zone"),o=t.getElementById("gl-file-input"),n=t.getElementById("gl-generate-btn"),i=t.getElementById("gl-preview-wrap"),a=t.getElementById("gl-preview-img"),g=t.getElementById("gl-change-photo"),l=null,d=s=>{if(!s.type.startsWith("image/"))return;l=s;let c=URL.createObjectURL(s);a&&(a.src=c),r&&(r.style.display="none"),i&&(i.style.display="block"),n&&(n.disabled=!1)};r?.addEventListener("click",()=>o?.click()),g?.addEventListener("click",()=>{l=null,r&&(r.style.display="block"),i&&(i.style.display="none"),n&&(n.disabled=!0),o?.click()}),o?.addEventListener("change",()=>{let s=o.files?.[0];s&&d(s)}),r?.addEventListener("dragover",s=>{s.preventDefault(),r.classList.add("gl-drag-over")}),r?.addEventListener("dragleave",()=>{r.classList.remove("gl-drag-over")}),r?.addEventListener("drop",s=>{s.preventDefault(),r.classList.remove("gl-drag-over");let c=s.dataTransfer?.files[0];c&&d(c)}),n?.addEventListener("click",async()=>{l&&await this.generateTryOn(l)})}e==="result"&&(t.getElementById("gl-retry")?.addEventListener("click",()=>this.renderOverlay("upload")),t.getElementById("gl-buy-btn")?.addEventListener("click",()=>{this.trackEvent("buy_clicked",{product_id:this.currentProduct?.id}),this.closeOverlay(),(document.querySelector('button[name="add"]')||document.querySelector('[class*="add-to-cart"]'))?.click()})),e==="error"&&t.getElementById("gl-retry")?.addEventListener("click",()=>this.renderOverlay("upload"))}}closeOverlay(){this.shadowRoot?.getElementById("gl-overlay")?.remove(),this.trackEvent("tryon_closed",{product_id:this.currentProduct?.id})}async generateTryOn(e){this.renderOverlay("processing"),this.trackEvent("tryon_started",{product_id:this.currentProduct?.id});try{let t=new FormData;t.append("user_photo",e),t.append("product_image_url",this.currentProduct?.imageUrl||""),t.append("product_id",this.currentProduct?.id||""),t.append("product_name",this.currentProduct?.name||""),t.append("brand_id",this.brandId),t.append("source","ghost-layer");let r=this.config?.apiEndpoint||p,o=await fetch(`${r}/api/widget/try-on`,{method:"POST",body:t});if(!o.ok){let a=await o.json().catch(()=>({}));throw new Error(a.error||`Server error: ${o.status}`)}let n=await o.json(),i=n.result_url||n.resultUrl;if(!i)throw new Error("No result image returned");this.trackEvent("tryon_completed",{product_id:this.currentProduct?.id,result_url:i}),this.renderOverlay("result",{resultUrl:i})}catch(t){console.error("[GhostLayer] Try-on generation failed:",t),this.trackEvent("tryon_failed",{product_id:this.currentProduct?.id,error:String(t)}),this.renderOverlay("error",{errorMsg:t instanceof Error?t.message:"Please try again."})}}async trackEvent(e,t){try{let r=this.config?.apiEndpoint||p;await fetch(`${r}/api/widget/track`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({brand_id:this.brandId,event_name:e,event_data:t,page_url:window.location.href,timestamp:new Date().toISOString()}),keepalive:!0})}catch{}}};(function(){let e=(document.currentScript||document.querySelector('script[src*="ghostlayer-widget"]'))?.getAttribute("data-brand-id");if(!e){console.warn("[GhostLayer] No data-brand-id attribute found on script tag");return}let t=()=>setTimeout(()=>new u(e),0);document.readyState==="loading"?document.addEventListener("DOMContentLoaded",t):t()})();})();
