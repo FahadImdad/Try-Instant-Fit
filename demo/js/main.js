@@ -863,29 +863,6 @@ function initProductDetail() {
     relGrid.innerHTML = rel.map(renderCard).join('');
   }
 
-  // Inject Schema.org JSON-LD so Ghost Layer widget can detect this product
-  const existingSchema = document.getElementById('gl-product-schema');
-  if (existingSchema) existingSchema.remove();
-  const schemaScript = document.createElement('script');
-  schemaScript.id = 'gl-product-schema';
-  schemaScript.type = 'application/ld+json';
-  schemaScript.textContent = JSON.stringify({
-    '@context': 'https://schema.org/',
-    '@type': 'Product',
-    name: p.name,
-    sku: p.id,
-    image: p.imgs,
-    offers: { '@type': 'Offer', price: p.price, priceCurrency: 'PKR' }
-  });
-  document.head.appendChild(schemaScript);
-
-  // Also set og:image for OpenGraph fallback
-  let ogImg = document.querySelector('meta[property="og:image"]');
-  if (!ogImg) { ogImg = document.createElement('meta'); ogImg.setAttribute('property', 'og:image'); document.head.appendChild(ogImg); }
-  ogImg.setAttribute('content', p.imgs[0]);
-  let ogType = document.querySelector('meta[property="og:type"]');
-  if (!ogType) { ogType = document.createElement('meta'); ogType.setAttribute('property', 'og:type'); document.head.appendChild(ogType); }
-  ogType.setAttribute('content', 'product');
 }
 
 window.switchPdImg = function(src, el) {

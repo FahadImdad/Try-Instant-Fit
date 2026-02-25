@@ -110,10 +110,13 @@ class GhostLayerWidget {
     const ogType = document.querySelector('meta[property="og:type"]')?.getAttribute('content');
     if (ogType && ogType.toLowerCase().includes('product')) return true;
 
-    // Strategy 3: URL patterns
+    // Strategy 3: URL patterns (path or filename)
     const url = window.location.pathname.toLowerCase();
-    const urlPatterns = ['/product/', '/products/', '/p/', '/item/', '/shop/', '/clothing/'];
+    const search = window.location.search.toLowerCase();
+    const urlPatterns = ['/product/', '/products/', '/p/', '/item/', '/shop/', '/clothing/', 'product.html'];
     if (urlPatterns.some(p => url.includes(p))) return true;
+    // Query-string based product pages (e.g. product.html?id=123)
+    if (search.includes('id=') && url.includes('product')) return true;
 
     // Strategy 4: DOM signals (price + image + add-to-cart)
     const hasPrice = !!(
@@ -190,19 +193,27 @@ class GhostLayerWidget {
 
   private extractFromDOM(): Product | null {
     const imageSelectors = [
+      // Specific IDs first (most reliable)
+      '#pd-main-img',                                    // demo site
+      '#product-featured-image',                        // common theme
+      // Class-based selectors
       '.product-image img',
       '.product-gallery img',
       '.product-single__media img',
       '.product-featured-image img',
       '.woocommerce-product-gallery__image img',
       '[data-product-image] img',
+      '[class*="pd-main"] img',                        // demo site (.pd-main-img wrapper)
       '[class*="product"] img',
       'main img',
     ];
 
     let imageUrl = '';
     for (const selector of imageSelectors) {
-      const img = document.querySelector(selector) as HTMLImageElement | null;
+      const el = document.querySelector(selector) as HTMLElement | null;
+      if (!el) continue;
+      // Handle both <img> directly and container elements with <img> inside
+      const img = el.tagName === 'IMG' ? (el as HTMLImageElement) : el.querySelector('img');
       if (img?.src && !this.isPlaceholderImage(img.src)) {
         imageUrl = img.src;
         break;
@@ -210,6 +221,7 @@ class GhostLayerWidget {
     }
 
     const nameSelectors = [
+      '#pd-name',                  // demo site
       'h1[class*="product"]',
       '[class*="product-title"]',
       '[class*="product-name"]',
