@@ -1,18 +1,33 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { VertexAI } from '@google-cloud/vertexai';
 
-let _genAI: GoogleGenerativeAI | null = null;
+let _vertexAI: VertexAI | null = null;
 
-export function getGenAI(): GoogleGenerativeAI {
-  if (_genAI) return _genAI;
+export function getVertexAI(): VertexAI {
+  if (_vertexAI) return _vertexAI;
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error('GEMINI_API_KEY is required');
+  const project = process.env.GOOGLE_CLOUD_PROJECT_ID;
+  if (!project) throw new Error('GOOGLE_CLOUD_PROJECT_ID is required');
 
-  _genAI = new GoogleGenerativeAI(apiKey);
-  return _genAI;
+  let credentials: object | undefined;
+  if (process.env.GOOGLE_CLOUD_KEY_JSON) {
+    try {
+      credentials = JSON.parse(process.env.GOOGLE_CLOUD_KEY_JSON);
+    } catch {
+      throw new Error('GOOGLE_CLOUD_KEY_JSON must be valid JSON');
+    }
+  }
+
+  _vertexAI = new VertexAI({
+    project,
+    location: process.env.VERTEX_LOCATION ?? 'us-central1',
+    googleAuthOptions: credentials ? { credentials } : undefined,
+  });
+
+  return _vertexAI;
 }
 
-export const TRYON_MODEL = 'gemini-2.0-flash-exp-image-generation';
+// gemini-2.0-flash-exp supports responseModalities: IMAGE on Vertex AI
+export const TRYON_MODEL = 'gemini-2.0-flash-exp';
 
 export const TRYON_PROMPT = `You are a virtual try-on AI. Generate a realistic photo showing the person wearing the garment.
 

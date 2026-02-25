@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getGenAI, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
+import { getVertexAI, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
 import { uploadTryOnResult } from '@/lib/storage';
 import { supabase } from '@/lib/supabase';
 
@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     const productBase64 = productBuffer.toString('base64');
 
     // ── Call Google AI (Gemini) ───────────────────────────────────────────────
-    const model = getGenAI().getGenerativeModel({ model: TRYON_MODEL });
+    const model = getVertexAI().getGenerativeModel({ model: TRYON_MODEL });
 
     const result = await model.generateContent({
       contents: [
