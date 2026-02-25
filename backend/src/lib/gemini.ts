@@ -43,15 +43,16 @@ export async function generateContent(requestBody: object): Promise<any> {
   return response.json();
 }
 
-export const TRYON_PROMPT = `INSTRUCTIONS FOR AI TAILOR:
-1. Look at the FIRST IMAGE (the Person). This is the model who will be wearing the clothes.
-2. Look at the SECOND IMAGE (the Garment). This is the exact piece of clothing (Shalwar Kameez/Suit) to be applied.
+export const TRYON_PROMPT = `You are a precise garment-swap tool. Your ONLY job is to replace the clothing in IMAGE 1 with the garment from IMAGE 2.
 
-TRANSFORMATION STEPS:
-- PERFORM A GARMENT TRANSFER: Remove the existing clothing from the Person in the first image.
-- APPLY THE NEW GARMENT: Dress the Person in the EXACT garment shown in the second image.
-- PRESERVE IDENTITY: Do not change the person's face, hair, skin tone, or body proportions.
-- PRESERVE ENVIRONMENT: Keep the background, lighting, and camera angle identical to the first image.
-- REALISM: Ensure the fabric folds, shadows, and textures (like embroidery or collar details) look 100% natural as if they were worn in the original photo.
+STRICT RULES — DO NOT BREAK ANY OF THESE:
+1. OUTPUT must be IMAGE 1 with ONLY the clothing changed. Nothing else.
+2. DO NOT change the person's face, eyes, nose, mouth, beard, hair, skin tone, or body shape.
+3. DO NOT change the camera angle, head tilt, pose, or body position. The person must be in the EXACT same pose as IMAGE 1.
+4. DO NOT reframe, crop, zoom, or resize. Output the same framing as IMAGE 1.
+5. DO NOT change the background, lighting direction, or room details.
+6. ONLY change the clothing: remove the existing outfit and replace it with the exact style, colour, and fabric from IMAGE 2.
+7. The garment must fit naturally on the person's actual body in IMAGE 1.
 
-Output ONLY the transformed image.`;
+Think of it as Photoshop: keep everything the same, just swap the clothes.`;
+
