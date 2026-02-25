@@ -58,15 +58,18 @@ export async function POST(request: NextRequest) {
 
     // ── Call Google AI (Gemini) via OAuth2 ───────────────────────────────────
     const result = await generateContent({
+      system_instruction: {
+        parts: [{ text: TRYON_PROMPT }],
+      },
       contents: [
         {
           role: 'user',
           parts: [
-            { text: 'IMAGE 1 — TARGET PERSON (this is the person you must dress):' },
+            { text: 'Here is the PERSON photo (Image 1):' },
             { inlineData: { data: userPhotoBase64, mimeType: userPhotoFile.type } },
-            { text: 'IMAGE 2 — GARMENT SOURCE (extract the clothing from this image and apply it to the person above):' },
+            { text: 'Here is the GARMENT photo (Image 2):' },
             { inlineData: { data: productBase64, mimeType: productMimeType } },
-            { text: TRYON_PROMPT },
+            { text: 'Generate the virtual try-on image now.' },
           ],
         },
       ],
