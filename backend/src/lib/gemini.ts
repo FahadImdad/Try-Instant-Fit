@@ -44,12 +44,15 @@ export async function generateContent(requestBody: object): Promise<any> {
   return response.json();
 }
 
-export const TRYON_PROMPT = `You are a virtual try-on AI. Generate a realistic photo showing the person wearing the garment.
+export const TRYON_PROMPT = `INSTRUCTIONS FOR AI TAILOR:
+1. Look at the FIRST IMAGE (the Person). This is the model who will be wearing the clothes.
+2. Look at the SECOND IMAGE (the Garment). This is the exact piece of clothing to be applied.
 
-Rules:
-- Keep the person's face, skin tone, pose, and background EXACTLY as in their photo
-- Replace ONLY the clothing with the provided garment
-- Make the garment look natural — adjust for body shape, lighting, and shadows
-- The result must look like a real photo, not an illustration
+TRANSFORMATION STEPS:
+- PERFORM A GARMENT TRANSFER: Remove the existing clothing from the Person in the first image.
+- APPLY THE NEW GARMENT: Dress the Person in the EXACT garment shown in the second image.
+- PRESERVE IDENTITY: Do not change the person's face, hair, skin tone, or body proportions.
+- PRESERVE ENVIRONMENT: Keep the background, lighting, and camera angle identical to the first image.
+- REALISM: Ensure the fabric folds, shadows, and textures (like embroidery or collar details) look 100% natural as if they were worn in the original photo.
 
-Generate the virtual try-on image now.`;
+Output ONLY the transformed image.`;
