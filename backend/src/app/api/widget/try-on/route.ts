@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getGenAI, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
+import { generateContent, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
 import { uploadTryOnResult } from '@/lib/storage';
 import { supabase } from '@/lib/supabase';
 
@@ -56,41 +56,29 @@ export async function POST(request: NextRequest) {
     const productMimeType = (productResponse.headers.get('content-type') ?? 'image/jpeg').split(';')[0];
     const productBase64 = productBuffer.toString('base64');
 
-    // ── Call Google AI (Gemini) ───────────────────────────────────────────────
-    const model = getGenAI().getGenerativeModel({ model: TRYON_MODEL });
-
-    const result = await model.generateContent({
+    // ── Call Google AI (Gemini) via OAuth2 ───────────────────────────────────
+    const result = await generateContent({
       contents: [
         {
           role: 'user',
           parts: [
             // Person photo
-            {
-              inlineData: {
-                data: userPhotoBase64,
-                mimeType: userPhotoFile.type,
-              },
-            },
+            { inlineData: { data: userPhotoBase64, mimeType: userPhotoFile.type } },
             // Product/garment image
-            {
-              inlineData: {
-                data: productBase64,
-                mimeType: productMimeType,
-              },
-            },
+            { inlineData: { data: productBase64, mimeType: productMimeType } },
             // Instruction
             { text: TRYON_PROMPT },
           ],
         },
       ],
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       generationConfig: {
         responseModalities: ['IMAGE', 'TEXT'],
-      } as any,
+      },
     });
 
     // ── Extract generated image ───────────────────────────────────────────────
-    const parts = result.response.candidates?.[0]?.content?.parts ?? [];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parts: any[] = result.candidates?.[0]?.content?.parts ?? [];
     const imagePart = parts.find(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (p: any) => p.inlineData?.mimeType?.startsWith('image/')

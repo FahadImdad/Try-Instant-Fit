@@ -1,20 +1,47 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleAuth } from 'google-auth-library';
 
-let _genAI: GoogleGenerativeAI | null = null;
+// gemini-2.0-flash-exp-image-generation requires OAuth2 (not API keys).
+// We authenticate using the service account from GOOGLE_CLOUD_KEY_JSON.
+export const TRYON_MODEL = 'gemini-2.0-flash-exp-image-generation';
 
-export function getGenAI(): GoogleGenerativeAI {
-  if (_genAI) return _genAI;
+const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${TRYON_MODEL}:generateContent`;
 
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) throw new Error('GEMINI_API_KEY is required');
+async function getAccessToken(): Promise<string> {
+  const keyJson = process.env.GOOGLE_CLOUD_KEY_JSON;
+  if (!keyJson) throw new Error('GOOGLE_CLOUD_KEY_JSON is required');
 
-  _genAI = new GoogleGenerativeAI(apiKey);
-  return _genAI;
+  const credentials = JSON.parse(keyJson);
+  const auth = new GoogleAuth({
+    credentials,
+    scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+  });
+
+  const client = await auth.getClient();
+  const { token } = await client.getAccessToken();
+  if (!token) throw new Error('Failed to get OAuth2 access token from service account');
+  return token;
 }
 
-// Image generation model — requires a paid-tier API key
-// (free tier quota = 0; use a key from a billing-enabled Google Cloud project)
-export const TRYON_MODEL = 'gemini-2.0-flash-exp-image-generation';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateContent(requestBody: object): Promise<any> {
+  const token = await getAccessToken();
+
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(`Gemini API ${response.status}: ${text}`);
+  }
+
+  return response.json();
+}
 
 export const TRYON_PROMPT = `You are a virtual try-on AI. Generate a realistic photo showing the person wearing the garment.
 
