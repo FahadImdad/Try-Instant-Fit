@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard | Try Instant Fit</title>
+  <meta name="description" content="See your virtual try-on analytics — button clicks, AI try-ons, processing times, and more.">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ── Login card ── */
+    .login-wrap { max-width: 480px; margin: 0 auto; }
+
+    /* ── Dashboard layout ── */
+    .dash-wrap { max-width: 1080px; margin: 0 auto; }
+
+    .dash-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .dash-brand-info h2 { margin: 0; font-size: 1.5rem; }
+    .dash-brand-info p { margin: .2rem 0 0; font-size: .85rem; color: var(--muted); }
+    .status-badge {
+      display: inline-block;
+      padding: .25rem .75rem;
+      border-radius: var(--r-full);
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      margin-left: .5rem;
+    }
+    .status-trial { background: #fef3c7; color: #92400e; }
+    .status-active { background: #d1fae5; color: #065f46; }
+
+    /* ── Stat cards ── */
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--grad);
+    }
+    .stat-label { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-bottom: .5rem; }
+    .stat-value { font-size: 2.2rem; font-weight: 900; color: var(--primary); line-height: 1; margin-bottom: .25rem; }
+    .stat-sub { font-size: .78rem; color: var(--muted); }
+
+    /* ── Recent try-ons table ── */
+    .table-wrap {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      overflow: hidden;
+    }
+    .table-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .table-head h3 { font-size: 1rem; margin: 0; }
+    table { width: 100%; border-collapse: collapse; }
+    th { text-align: left; padding: .75rem 1.5rem; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--surface); border-bottom: 1px solid var(--border); }
+    td { padding: 1rem 1.5rem; border-bottom: 1px solid var(--border); font-size: .88rem; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--surface); }
+    .thumb { width: 48px; height: 48px; border-radius: var(--r-sm); object-fit: cover; background: var(--surface2); }
+    .thumb-placeholder { width: 48px; height: 48px; border-radius: var(--r-sm); background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; }
+    .duration-pill {
+      display: inline-block;
+      padding: .2rem .6rem;
+      border-radius: var(--r-full);
+      font-size: .72rem;
+      font-weight: 700;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+    .empty-state { text-align: center; padding: 3rem 1.5rem; color: var(--muted); }
+    .empty-state .icon { font-size: 2.5rem; margin-bottom: .75rem; }
+
+    /* ── Field ── */
+    .field { margin-bottom: 1.25rem; }
+    .field label { display: block; font-weight: 600; font-size: .875rem; margin-bottom: .4rem; }
+    .field input {
+      width: 100%; padding: .8rem 1rem; border: 2px solid var(--border);
+      border-radius: var(--r-md); font-size: 1rem; font-family: inherit;
+      color: var(--text); background: var(--white); outline: none;
+      transition: border-color .2s;
+    }
+    .field input:focus { border-color: var(--cyan); }
+    .field-hint { font-size: .78rem; color: var(--muted); margin-top: .3rem; }
+
+    /* ── Alert ── */
+    .alert { padding: .9rem 1.1rem; border-radius: var(--r-md); font-size: .88rem; margin-bottom: 1.25rem; display: none; }
+    .alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; display: block; }
+
+    /* ── Spinner ── */
+    .spinner-lg {
+      width: 40px; height: 40px;
+      border: 4px solid var(--border);
+      border-top-color: var(--cyan);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+      margin: 3rem auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Refresh badge ── */
+    .refresh-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: .4rem .9rem;
+      border-radius: var(--r-full);
+      font-size: .78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all .2s;
+    }
+    .refresh-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+    /* ── Install hint card ── */
+    .install-hint {
+      background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+      border: 1px solid #6ee7b7;
+      border-radius: var(--r-xl);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .install-hint .icon { font-size: 2rem; flex-shrink: 0; }
+    .install-hint h4 { margin: 0 0 .25rem; color: #065f46; font-size: .95rem; }
+    .install-hint p { margin: 0; font-size: .82rem; color: #047857; }
+    .install-hint a { color: #059669; font-weight: 700; text-decoration: underline; }
+
+    @media (max-width: 700px) {
+      th:nth-child(3), td:nth-child(3) { display: none; }
+      .stat-value { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navigation ── -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-container">
+    <div class="logo">Try Instant<span>Fit</span></div>
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="navMenu">
+      <li><a href="index.html" class="nav-link">Home</a></li>
+      <li><a href="products.html" class="nav-link">Products</a></li>
+      <li><a href="how-it-works.html" class="nav-link">How It Works</a></li>
+      <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+      <li><a href="install.html" class="nav-link nav-register">Get Started</a></li>
+      <li><a href="dashboard.html" class="btn btn-primary btn-sm active">Dashboard</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── Section ── -->
+<section class="section" style="padding-top: 4rem;">
+  <div class="container">
+
+    <!-- ── LOGIN VIEW ── -->
+    <div id="loginView">
+      <div class="login-wrap">
+        <div style="text-align: center; margin-bottom: 2rem;">
+          <h1 style="font-size: clamp(1.8rem,3.5vw,2.5rem); margin-bottom: .5rem;">Analytics Dashboard</h1>
+          <p style="color: var(--muted);">Enter your email or Brand ID to see your try-on stats.</p>
+        </div>
+        <div class="card" style="box-shadow: var(--sh2); padding: 2.25rem;">
+          <div class="alert" id="loginError"></div>
+          <div class="field">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" placeholder="you@yourbrand.com">
+            <div class="field-hint">The email you used to register.</div>
+          </div>
+          <div style="text-align: center; color: var(--muted); font-size: .85rem; margin: .75rem 0; font-weight: 600;">— or —</div>
+          <div class="field">
+            <label for="loginBrandId">Brand ID</label>
+            <input type="text" id="loginBrandId" placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+            <div class="field-hint">Found on your install code page.</div>
+          </div>
+          <button class="btn btn-primary" style="width:100%; font-size:1rem; padding:.9rem;" id="loginBtn" onclick="loadDashboard()">
+            View My Analytics →
+          </button>
+          <p style="text-align: center; margin-top: 1.25rem; font-size: .85rem; color: var(--muted);">
+            Don't have a Brand ID? <a href="install.html" style="color: var(--cyan); font-weight: 700;">Get your install code →</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── LOADING ── -->
+    <div id="loadingView" style="display: none;">
+      <div class="spinner-lg"></div>
+      <p style="text-align: center; color: var(--muted);">Loading your analytics…</p>
+    </div>
+
+    <!-- ── DASHBOARD VIEW ── -->
+    <div id="dashView" style="display: none;">
+      <div class="dash-wrap">
+
+        <!-- Header -->
+        <div class="dash-header">
+          <div class="dash-brand-info">
+            <h2 id="dashBrandName">Brand Name <span class="status-badge status-trial" id="dashStatus">Trial</span></h2>
+            <p id="dashWebsite"></p>
+          </div>
+          <div style="display: flex; gap: .75rem; align-items: center; flex-wrap: wrap;">
+            <button class="refresh-btn" onclick="refreshDashboard()">↻ Refresh</button>
+            <a href="install.html" class="btn btn-outline-dark btn-sm">Get Install Code</a>
+            <button class="btn btn-outline-dark btn-sm" onclick="logout()">Switch Account</button>
+          </div>
+        </div>
+
+        <!-- Install hint (shown when 0 try-ons) -->
+        <div class="install-hint" id="installHint" style="display: none;">
+          <div class="icon">🚀</div>
+          <div>
+            <h4>Widget not yet active — install it in 5 minutes</h4>
+            <p>Your brand account is ready. <a href="install.html">Get your install code</a> and paste it on your store to start seeing try-ons here.</p>
+          </div>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Try-Ons</div>
+            <div class="stat-value" id="statTotal">—</div>
+            <div class="stat-sub">All time</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Button Clicks</div>
+            <div class="stat-value" id="statClicks">—</div>
+            <div class="stat-sub">All time</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Today</div>
+            <div class="stat-value" id="statToday">—</div>
+            <div class="stat-sub">Try-ons so far</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">This Week</div>
+            <div class="stat-value" id="statWeek">—</div>
+            <div class="stat-sub">Last 7 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">This Month</div>
+            <div class="stat-value" id="statMonth">—</div>
+            <div class="stat-sub">Current month</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg AI Time</div>
+            <div class="stat-value" id="statAvg">—</div>
+            <div class="stat-sub">Per try-on</div>
+          </div>
+        </div>
+
+        <!-- Recent try-ons table -->
+        <div class="table-wrap">
+          <div class="table-head">
+            <h3>Recent Try-Ons</h3>
+            <span style="font-size: .8rem; color: var(--muted);">Last 20 records</span>
+          </div>
+          <div id="tableBody"></div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Try Instant<span style="color: var(--cyan);">Fit</span></h4>
+        <p style="color: rgba(255,255,255,.7);">AI-powered virtual try-on.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="install.html">Get Install Code</a></li>
+          <li><a href="dashboard.html">Analytics</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:hello@tryinstantfit.com">hello@tryinstantfit.com</a></li>
+          <li><a href="https://wa.me/923001234567">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Try Instant Fit. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+<script>
+  const API = 'https://backend-psi-peach.vercel.app';
+  let activeBrandId = null;
+
+  // ── Auto-load from URL param ──
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    const email = params.get('email');
+    if (id) { document.getElementById('loginBrandId').value = id; loadDashboard(); }
+    else if (email) { document.getElementById('loginEmail').value = email; loadDashboard(); }
+  })();
+
+  // ── Login / Load ──
+  async function loadDashboard() {
+    const emailInput = document.getElementById('loginEmail').value.trim();
+    const brandIdInput = document.getElementById('loginBrandId').value.trim();
+    const errEl = document.getElementById('loginError');
+    errEl.className = 'alert';
+
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    btn.textContent = 'Loading…';
+
+    try {
+      let brandId = brandIdInput;
+
+      // Resolve email → brand_id if needed
+      if (!brandId && emailInput) {
+        const res = await fetch(`${API}/api/brands/lookup?email=${encodeURIComponent(emailInput)}`);
+        const data = await res.json();
+        if (!res.ok) { showLoginError(data.error || 'No brand found for that email.'); return; }
+        brandId = data.brand_id;
+      }
+
+      if (!brandId) { showLoginError('Please enter your email or Brand ID.'); return; }
+
+      await fetchAndRender(brandId);
+
+    } catch (err) {
+      showLoginError('Network error. Please try again.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'View My Analytics →';
+    }
+  }
+
+  async function fetchAndRender(brandId) {
+    activeBrandId = brandId;
+    show('loadingView');
+    hide('loginView');
+    hide('dashView');
+
+    try {
+      const res = await fetch(`${API}/api/brands/${brandId}/analytics`);
+      const data = await res.json();
+
+      if (!res.ok) {
+        show('loginView');
+        hide('loadingView');
+        showLoginError(data.error || 'Brand not found. Check your Brand ID.');
+        return;
+      }
+
+      renderDashboard(data);
+    } catch (err) {
+      show('loginView');
+      hide('loadingView');
+      showLoginError('Failed to load analytics. Try again.');
+    }
+  }
+
+  function renderDashboard(data) {
+    const { brand, stats, recent } = data;
+
+    // Header
+    document.getElementById('dashBrandName').innerHTML =
+      `${brand.name} <span class="status-badge status-${brand.status}">${brand.status}</span>`;
+    document.getElementById('dashWebsite').textContent =
+      brand.website_url ? `🌐 ${brand.website_url}` : '(no website on file)';
+
+    // Stats
+    document.getElementById('statTotal').textContent = fmt(stats.total_tryons);
+    document.getElementById('statClicks').textContent = fmt(stats.button_clicks);
+    document.getElementById('statToday').textContent = fmt(stats.today);
+    document.getElementById('statWeek').textContent = fmt(stats.this_week);
+    document.getElementById('statMonth').textContent = fmt(stats.this_month);
+    document.getElementById('statAvg').textContent =
+      stats.avg_processing_ms ? `${(stats.avg_processing_ms / 1000).toFixed(1)}s` : '—';
+
+    // Install hint
+    document.getElementById('installHint').style.display =
+      stats.total_tryons === 0 ? 'flex' : 'none';
+
+    // Table
+    const tableBody = document.getElementById('tableBody');
+    if (!recent.length) {
+      tableBody.innerHTML = `
+        <div class="empty-state">
+          <div class="icon">🧥</div>
+          <p style="margin:0; font-weight:600; color: var(--text);">No try-ons yet</p>
+          <p style="margin:.5rem 0 0; font-size:.85rem;">Install the widget on your store to start collecting data.</p>
+          <a href="install.html" class="btn btn-primary" style="margin-top:1rem; display:inline-block;">Get Install Code →</a>
+        </div>`;
+    } else {
+      tableBody.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>Result</th>
+              <th>Product</th>
+              <th>Duration</th>
+              <th>Date & Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${recent.map(r => `
+              <tr>
+                <td>
+                  ${r.result_image_url
+                    ? `<img class="thumb" src="${r.result_image_url}" alt="try-on" loading="lazy">`
+                    : `<div class="thumb-placeholder">🧥</div>`}
+                </td>
+                <td>${r.product_name || '<span style="color:var(--muted)">—</span>'}</td>
+                <td>
+                  ${r.processing_time_ms
+                    ? `<span class="duration-pill">${(r.processing_time_ms / 1000).toFixed(1)}s</span>`
+                    : '—'}
+                </td>
+                <td style="color:var(--muted); font-size:.82rem;">${fmtDate(r.created_at)}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+
+    hide('loadingView');
+    show('dashView');
+
+    // Push brand ID to URL without reload
+    const url = new URL(window.location.href);
+    url.searchParams.set('id', activeBrandId);
+    window.history.replaceState({}, '', url.toString());
+  }
+
+  async function refreshDashboard() {
+    if (activeBrandId) await fetchAndRender(activeBrandId);
+  }
+
+  function logout() {
+    activeBrandId = null;
+    hide('dashView');
+    hide('loadingView');
+    show('loginView');
+    document.getElementById('loginEmail').value = '';
+    document.getElementById('loginBrandId').value = '';
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+
+  // ── Helpers ──
+  function show(id) { document.getElementById(id).style.display = 'block'; }
+  function hide(id) { document.getElementById(id).style.display = 'none'; }
+  function fmt(n) { return (n ?? 0).toLocaleString(); }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-PK', { day: '2-digit', month: 'short', year: 'numeric' })
+      + ' · ' + d.toLocaleTimeString('en-PK', { hour: '2-digit', minute: '2-digit' });
+  }
+  function showLoginError(msg) {
+    const el = document.getElementById('loginError');
+    el.textContent = msg;
+    el.className = 'alert error';
+  }
+
+  // ── Enter key ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && document.getElementById('loginView').style.display !== 'none') {
+      loadDashboard();
+    }
+  });
+</script>
+</body>
+</html>
