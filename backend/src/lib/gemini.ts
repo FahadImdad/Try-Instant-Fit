@@ -1,29 +1,15 @@
-import { VertexAI } from '@google-cloud/vertexai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
-let _vertexAI: VertexAI | null = null;
+let _genAI: GoogleGenerativeAI | null = null;
 
-export function getVertexAI(): VertexAI {
-  if (_vertexAI) return _vertexAI;
+export function getGenAI(): GoogleGenerativeAI {
+  if (_genAI) return _genAI;
 
-  const project = process.env.GOOGLE_CLOUD_PROJECT_ID;
-  if (!project) throw new Error('GOOGLE_CLOUD_PROJECT_ID is required');
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error('GEMINI_API_KEY is required');
 
-  let credentials: object | undefined;
-  if (process.env.GOOGLE_CLOUD_KEY_JSON) {
-    try {
-      credentials = JSON.parse(process.env.GOOGLE_CLOUD_KEY_JSON);
-    } catch {
-      throw new Error('GOOGLE_CLOUD_KEY_JSON must be valid JSON');
-    }
-  }
-
-  _vertexAI = new VertexAI({
-    project,
-    location: process.env.VERTEX_LOCATION ?? 'us-central1',
-    googleAuthOptions: credentials ? { credentials } : undefined,
-  });
-
-  return _vertexAI;
+  _genAI = new GoogleGenerativeAI(apiKey);
+  return _genAI;
 }
 
 export const TRYON_MODEL = 'gemini-2.0-flash-exp';

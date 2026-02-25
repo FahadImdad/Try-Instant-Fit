@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getVertexAI, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
+import { getGenAI, TRYON_MODEL, TRYON_PROMPT } from '@/lib/gemini';
 import { uploadTryOnResult } from '@/lib/storage';
 import { supabase } from '@/lib/supabase';
 
@@ -56,8 +56,8 @@ export async function POST(request: NextRequest) {
     const productMimeType = (productResponse.headers.get('content-type') ?? 'image/jpeg').split(';')[0];
     const productBase64 = productBuffer.toString('base64');
 
-    // ── Call Vertex AI ────────────────────────────────────────────────────────
-    const model = getVertexAI().getGenerativeModel({ model: TRYON_MODEL });
+    // ── Call Google AI (Gemini) ───────────────────────────────────────────────
+    const model = getGenAI().getGenerativeModel({ model: TRYON_MODEL });
 
     const result = await model.generateContent({
       contents: [
@@ -68,14 +68,14 @@ export async function POST(request: NextRequest) {
             {
               inlineData: {
                 data: userPhotoBase64,
-                mimeType: userPhotoFile.type as 'image/jpeg' | 'image/png' | 'image/webp',
+                mimeType: userPhotoFile.type,
               },
             },
             // Product/garment image
             {
               inlineData: {
                 data: productBase64,
-                mimeType: productMimeType as 'image/jpeg' | 'image/png',
+                mimeType: productMimeType,
               },
             },
             // Instruction
@@ -85,8 +85,6 @@ export async function POST(request: NextRequest) {
       ],
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       generationConfig: {
-        // responseModalities is not yet typed in @google-cloud/vertexai but is
-        // required to get image output from gemini-3-pro-image-preview
         responseModalities: ['IMAGE', 'TEXT'],
       } as any,
     });
@@ -94,12 +92,15 @@ export async function POST(request: NextRequest) {
     // ── Extract generated image ───────────────────────────────────────────────
     const parts = result.response.candidates?.[0]?.content?.parts ?? [];
     const imagePart = parts.find(
-      (p) => p.inlineData?.mimeType?.startsWith('image/')
-    );
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (p: any) => p.inlineData?.mimeType?.startsWith('image/')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ) as any;
 
     if (!imagePart?.inlineData?.data) {
-      const textPart = parts.find((p) => p.text);
-      console.error('[try-on] No image in Vertex AI response. Text:', textPart?.text);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const textPart = parts.find((p: any) => p.text) as any;
+      console.error('[try-on] No image in AI response. Text:', textPart?.text);
       return NextResponse.json(
         { error: 'AI could not generate the try-on. Please try a clearer, front-facing photo.' },
         { status: 422 }
@@ -124,7 +125,7 @@ export async function POST(request: NextRequest) {
         result_image_url: resultUrl,
         ai_model: TRYON_MODEL,
         processing_time_ms: processingTimeMs,
-        cost_usd: 0.134,
+        cost_usd: 0.004,
         source: 'ghost-layer',
       })
       .then(({ error }) => {
