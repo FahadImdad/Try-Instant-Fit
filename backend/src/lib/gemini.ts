@@ -12,7 +12,7 @@ export function getGenAI(): GoogleGenerativeAI {
   return _genAI;
 }
 
-export const TRYON_MODEL = 'gemini-2.0-flash-exp';
+export const TRYON_MODEL = 'gemini-2.0-flash-exp-image-generation';
 
 export const TRYON_PROMPT = `You are a virtual try-on AI. Generate a realistic photo showing the person wearing the garment.
 
