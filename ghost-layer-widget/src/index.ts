@@ -265,9 +265,8 @@ class GhostLayerWidget {
         }
         Object.assign(btnRoot.style, {
           position: 'absolute',
-          bottom: '14px',
-          left: '50%',
-          transform: 'translateX(-50%)',
+          top: '14px',
+          right: '14px',
           zIndex: '100',
           pointerEvents: 'auto',
         });
