@@ -58,24 +58,29 @@ class GhostLayerWidget {
         return;
       }
 
-      if (!this.isProductPage()) {
-        console.log('[GhostLayer] Not a product page');
-        return;
-      }
+      if (this.isProductPage()) {
+        this.currentProduct = this.detectProduct();
+        if (!this.currentProduct) {
+          console.log('[GhostLayer] No product detected');
+          return;
+        }
+        console.log('[GhostLayer] Product:', this.currentProduct.name);
+        this.injectButton();
+        this.trackEvent('widget_loaded', { product_id: this.currentProduct.id });
 
-      this.currentProduct = this.detectProduct();
-      if (!this.currentProduct) {
-        console.log('[GhostLayer] No product detected');
-        return;
-      }
-
-      console.log('[GhostLayer] Product:', this.currentProduct.name);
-      this.injectButton();
-      this.trackEvent('widget_loaded', { product_id: this.currentProduct.id });
-
-      // Auto-open if coming from listing page
-      if (new URLSearchParams(window.location.search).get('tryon') === '1') {
-        setTimeout(() => this.openOverlay(), 500);
+        // Auto-open if coming from listing page
+        if (new URLSearchParams(window.location.search).get('tryon') === '1') {
+          setTimeout(() => this.openOverlay(), 500);
+        }
+      } else {
+        // Listing page — auto-inject Try It On buttons on product cards
+        console.log('[GhostLayer] Scanning for product cards on listing page');
+        this.injectOverlayRoot();
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', () => this.scanListingPage());
+        } else {
+          this.scanListingPage();
+        }
       }
     } catch (err) {
       console.error('[GhostLayer] Init error:', err);
@@ -140,6 +145,119 @@ class GhostLayerWidget {
       document.querySelector('[class*="product-gallery"]')
     );
     return hasPrice && (hasCart || hasImg);
+  }
+
+  // ─── Listing Page Auto-Detection ─────────────────────────────────────────
+
+  private scanListingPage(): void {
+    this.findProductCards().forEach((card) => this.injectCardButton(card));
+
+    // Watch for dynamically loaded cards (SPA infinite scroll, etc.)
+    const observer = new MutationObserver(() => {
+      this.findProductCards().forEach((card) => this.injectCardButton(card));
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  private findProductCards(): HTMLElement[] {
+    // Common product card selectors across Shopify, WooCommerce, custom sites, React SPAs
+    const selectors = [
+      // Shopify
+      '.card-wrapper', '.grid__item .card', '.product-card',
+      // WooCommerce
+      'li.product', '.woocommerce-loop-product__link',
+      // Generic patterns
+      '.product-item', '.product-grid-item', '.grid-product',
+      '[class*="product-card"]', '[class*="ProductCard"]',
+      '[class*="product-item"]', '[class*="ProductItem"]',
+      '[class*="product-tile"]', '[class*="ProductTile"]',
+      '[data-product-id]', '[data-product]',
+    ];
+
+    const found = new Set<HTMLElement>();
+    for (const sel of selectors) {
+      document.querySelectorAll<HTMLElement>(sel).forEach((el) => {
+        // Skip already-injected, skip if no image inside
+        if (!el.dataset.glInjected && el.querySelector('img')) {
+          found.add(el);
+        }
+      });
+    }
+    return Array.from(found);
+  }
+
+  private injectCardButton(card: HTMLElement): void {
+    card.dataset.glInjected = '1';
+
+    // Find the main product image in the card
+    const img = Array.from(card.querySelectorAll<HTMLImageElement>('img')).find(
+      (i) => i.width > 60 && !this.isPlaceholder(i.src) && i.src
+    );
+    if (!img) return;
+
+    // Extract product details from the card
+    const nameEl = card.querySelector<HTMLElement>(
+      'h2, h3, h4, [class*="title"], [class*="name"], [class*="product-name"], [class*="card-title"]'
+    );
+    const name = nameEl?.textContent?.trim() || 'Product';
+    const link = card.querySelector<HTMLAnchorElement>('a[href]');
+    const url = link?.href || location.href;
+
+    const product: Product = {
+      id: Math.random().toString(36).substr(2, 12),
+      name,
+      imageUrl: img.src,
+      url,
+    };
+
+    // Position button over the image
+    const imgContainer = img.parentElement!;
+    if (getComputedStyle(imgContainer).position === 'static') {
+      imgContainer.style.position = 'relative';
+    }
+
+    const color = this.config?.buttonColor || '#1a1a2e';
+    const btn = document.createElement('button');
+    btn.textContent = 'Try It On ✨';
+    btn.className = 'gl-card-tryon-btn';
+    Object.assign(btn.style, {
+      position: 'absolute',
+      bottom: '12px',
+      right: '12px',
+      zIndex: '10',
+      background: color,
+      color: '#fff',
+      border: 'none',
+      borderRadius: '50px',
+      padding: '8px 16px',
+      fontSize: '12px',
+      fontWeight: '700',
+      cursor: 'pointer',
+      boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
+      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+      whiteSpace: 'nowrap',
+      letterSpacing: '0.3px',
+      transition: 'transform 0.18s, box-shadow 0.18s, filter 0.18s',
+    });
+
+    btn.addEventListener('mouseover', () => {
+      btn.style.transform = 'translateY(-2px)';
+      btn.style.boxShadow = '0 6px 20px rgba(0,0,0,0.4)';
+      btn.style.filter = 'brightness(1.12)';
+    });
+    btn.addEventListener('mouseout', () => {
+      btn.style.transform = '';
+      btn.style.boxShadow = '0 2px 12px rgba(0,0,0,0.3)';
+      btn.style.filter = '';
+    });
+
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      this.openForProduct(product);
+    });
+
+    imgContainer.appendChild(btn);
   }
 
   // ─── Product Detection ────────────────────────────────────────────────────
