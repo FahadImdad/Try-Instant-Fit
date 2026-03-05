@@ -479,9 +479,9 @@ class GhostLayerWidget {
           </div>
           <img src="${data?.resultUrl || ''}" alt="Virtual try-on result" class="gl-result-img" />
           <div class="gl-result-actions">
-            <a href="${data?.resultUrl || '#'}" download="my-look.jpg" class="gl-secondary-btn">⬇ Download</a>
             <button class="gl-secondary-btn" id="gl-retry">Try Another Photo</button>
-            <button class="gl-primary-btn gl-buy-btn" id="gl-buy-btn">Add to Cart</button>
+            <button class="gl-secondary-btn" id="gl-wl-btn">♡ Wishlist</button>
+            <button class="gl-primary-btn gl-buy-btn" id="gl-buy-btn">🛒 Add to Cart</button>
           </div>
           <p class="gl-privacy">Powered by <strong>Try Instant Fit</strong></p>
         </div>
@@ -820,12 +820,26 @@ class GhostLayerWidget {
         this.renderOverlay('upload');
       });
       root.getElementById('gl-buy-btn')?.addEventListener('click', () => {
-        this.trackEvent('buy_clicked', { product_id: this.currentProduct?.id });
+        const id = this.currentProduct?.id;
+        this.trackEvent('buy_clicked', { product_id: id });
+        if (id && (window as any).glAddToCart) {
+          (window as any).glAddToCart(id);
+        } else {
+          const atc =
+            document.querySelector<HTMLButtonElement>('button[name="add"]') ||
+            document.querySelector<HTMLButtonElement>('[class*="add-to-cart"]');
+          atc?.click();
+        }
         this.closeOverlay();
-        const atc =
-          document.querySelector<HTMLButtonElement>('button[name="add"]') ||
-          document.querySelector<HTMLButtonElement>('[class*="add-to-cart"]');
-        atc?.click();
+      });
+      root.getElementById('gl-wl-btn')?.addEventListener('click', () => {
+        const id = this.currentProduct?.id;
+        this.trackEvent('wishlist_clicked', { product_id: id });
+        if (id && (window as any).glAddToWL) {
+          (window as any).glAddToWL(id);
+          const btn = root.getElementById('gl-wl-btn');
+          if (btn) btn.textContent = '♥ Wishlisted';
+        }
       });
     }
 

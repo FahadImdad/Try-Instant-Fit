@@ -552,6 +552,17 @@ function glTryOn(id, imageUrl, name, price) {
   }
 }
 
+function glAddToCart(id) {
+  const p = ALL_PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  const size = p.sizes?.length ? p.sizes[0] : 'One Size';
+  addToCart(id, size, '—');
+}
+
+function glAddToWL(id) {
+  toggleWL(id);
+}
+
 let _selectedSizes = {};
 function selectSizeFromCard(id, size, btn) {
   _selectedSizes[id] = size;
