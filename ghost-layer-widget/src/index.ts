@@ -72,6 +72,11 @@ class GhostLayerWidget {
       console.log('[GhostLayer] Product:', this.currentProduct.name);
       this.injectButton();
       this.trackEvent('widget_loaded', { product_id: this.currentProduct.id });
+
+      // Auto-open if coming from listing page
+      if (new URLSearchParams(window.location.search).get('tryon') === '1') {
+        setTimeout(() => this.openOverlay(), 500);
+      }
     } catch (err) {
       console.error('[GhostLayer] Init error:', err);
     }

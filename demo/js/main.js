@@ -544,13 +544,7 @@ function renderCard(p) {
 function goProduct(id) { window.location.href = `product.html?id=${id}`; }
 
 function glTryOn(id) {
-  const w = window.__ghostlayer;
-  const p = ALL_PRODUCTS.find(x => x.id === id);
-  if (w && p) {
-    w.openForProduct({ id, imageUrl: p.imgs[0], name: p.name, price: String(p.price), url: `product.html?id=${id}` });
-  } else {
-    goProduct(id);
-  }
+  window.location.href = `product.html?id=${id}&tryon=1`;
 }
 
 function glAddToCart(id) {
