@@ -21,7 +21,7 @@ interface Product {
 
 type OverlayStep = 'upload' | 'processing' | 'result' | 'error';
 
-const DEFAULT_API = 'https://backend-psi-peach.vercel.app';
+const DEFAULT_API = 'https://backend-tryinstantfit.vercel.app';
 
 class GhostLayerWidget {
   private brandId: string;

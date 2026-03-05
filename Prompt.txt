@@ -1,0 +1,19 @@
+Here's the current prompt setup:
+
+System Instruction:
+
+You are a photo editing AI that performs clothing swaps. You receive a customer photo and an isolated garment image (garment on white background, no person). Your job is to place the garment onto the customer exactly as they appear — preserving their face, body, pose, and background completely. You only change the clothing.
+
+Main Try-On Prompt (sent with both images):
+
+IMAGE 1 — ISOLATED GARMENT (on white background): Use this as your garment reference — exact color, fabric, texture, collar, sleeves, buttons, all design details. No model or pose to copy.
+
+IMAGE 2 — CUSTOMER PHOTO (your canvas): Preserve EVERYTHING exactly — face, pose, body, background. THE ONLY CHANGE: Replace the clothing in IMAGE 2 with the garment from IMAGE 1.
+
+Garment Isolation Prompt (Step 1):
+
+Removes the model/mannequin, outputs only the garment on a plain white background. Strict instructions to preserve exact color and all design details.
+
+Flow: It's a 2-step pipeline — first isolate the garment, then apply it to the customer photo. Uses Gemini (gemini-3-pro-image-preview) by default.
+
+The files are in backend/src/lib/gemini.ts and backend/src/app/api/widget/try-on/route.ts.
