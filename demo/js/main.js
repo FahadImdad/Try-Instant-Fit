@@ -530,7 +530,7 @@ function renderCard(p) {
         </svg>
       </button>
       ${p.sizes.length ? `<div class="card-sizes">${sizeHTML}</div>` : ''}
-      <button class="card-tryon" onclick="event.stopPropagation();goProduct('${p.id}')">Try It On ✨</button>
+      <button class="card-tryon" onclick="event.stopPropagation();glTryOn('${p.id}','${p.imgs[0]}','${p.name}',${p.price})">Try It On ✨</button>
     </div>
     <div class="card-fabric">${p.fabric}</div>
     <div class="card-name">${p.name}</div>
@@ -542,6 +542,15 @@ function renderCard(p) {
 }
 
 function goProduct(id) { window.location.href = `product.html?id=${id}`; }
+
+function glTryOn(id, imageUrl, name, price) {
+  const w = window.__ghostlayer;
+  if (w) {
+    w.openForProduct({ id, imageUrl, name, price: String(price), url: `product.html?id=${id}` });
+  } else {
+    goProduct(id);
+  }
+}
 
 let _selectedSizes = {};
 function selectSizeFromCard(id, size, btn) {

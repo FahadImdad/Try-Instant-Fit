@@ -351,6 +351,11 @@ class GhostLayerWidget {
     btnShadow.getElementById('gl-try-btn')?.addEventListener('click', () => this.openOverlay());
 
     // Overlay root — always on body so position:fixed works regardless of image container
+    this.injectOverlayRoot();
+  }
+
+  private injectOverlayRoot(): void {
+    if (this.overlayRoot) return;
     this.overlayRoot = document.createElement('div');
     this.overlayRoot.id = 'ghostlayer-overlay-root';
     document.body.appendChild(this.overlayRoot);
@@ -363,6 +368,13 @@ class GhostLayerWidget {
     this.trackEvent('tryon_opened', { product_id: this.currentProduct?.id });
     this.selectedFile = null;
     this.renderOverlay('upload');
+  }
+
+  public openForProduct(product: Product): void {
+    if (!this.config?.enabled) return;
+    if (!this.overlayRoot) this.injectOverlayRoot();
+    this.currentProduct = product;
+    this.openOverlay();
   }
 
   private renderOverlay(step: OverlayStep, data?: { resultUrl?: string; errorMsg?: string }): void {
@@ -1075,7 +1087,10 @@ class GhostLayerWidget {
     return;
   }
 
-  const initWidget = () => setTimeout(() => new GhostLayerWidget(brandId), 0);
+  const initWidget = () => setTimeout(() => {
+    const instance = new GhostLayerWidget(brandId);
+    (window as any).__ghostlayer = instance;
+  }, 0);
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initWidget);
