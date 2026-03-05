@@ -90,3 +90,6 @@ TRASH/
 02-builds/active/*
 # Completed builds
 02-builds/complete/*
+
+# Node modules
+node_modules/
