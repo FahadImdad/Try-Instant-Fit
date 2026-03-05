@@ -203,8 +203,15 @@ class GhostLayerWidget {
     const link = card.querySelector<HTMLAnchorElement>('a[href]');
     const url = link?.href || location.href;
 
+    // Try to extract real product ID from URL query params (e.g. ?id=rtw-001)
+    let productId = Math.random().toString(36).substr(2, 12);
+    try {
+      const urlParams = new URLSearchParams(new URL(url, location.href).search);
+      productId = urlParams.get('id') || urlParams.get('product_id') || urlParams.get('productId') || productId;
+    } catch (_e) {}
+
     const product: Product = {
-      id: Math.random().toString(36).substr(2, 12),
+      id: productId,
       name,
       imageUrl: img.src,
       url,
