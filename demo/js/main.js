@@ -530,6 +530,7 @@ function renderCard(p) {
         </svg>
       </button>
       ${p.sizes.length ? `<div class="card-sizes">${sizeHTML}</div>` : ''}
+      <button class="card-tryon" onclick="event.stopPropagation();goProduct('${p.id}')">Try It On ✨</button>
     </div>
     <div class="card-fabric">${p.fabric}</div>
     <div class="card-name">${p.name}</div>

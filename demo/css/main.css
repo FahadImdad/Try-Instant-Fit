@@ -464,6 +464,20 @@ input, select { font-family: inherit; outline: none; }
   transition: transform 0.25s ease;
 }
 .product-card:hover .card-sizes { transform: translateY(0); }
+.card-tryon {
+  position: absolute; bottom: 12px; left: 12px; z-index: 6;
+  background: #1a1a2e; color: #fff;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.3px;
+  padding: 7px 12px; border-radius: 20px; border: none;
+  cursor: pointer; pointer-events: auto;
+  transform: translateY(6px); opacity: 0;
+  transition: transform 0.25s ease, opacity 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+.product-card:hover .card-tryon {
+  transform: translateY(0); opacity: 1;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
 .card-size-btn {
   font-size: 10px; font-weight: 600;
   padding: 3px 6px; border-radius: 3px;
