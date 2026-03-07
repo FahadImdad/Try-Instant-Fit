@@ -165,9 +165,9 @@
     }
     .section-head h3 { font-size: 1rem; margin: 0; }
     .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
     .product-card {
       background: var(--white);
@@ -179,50 +179,50 @@
       display: flex;
       gap: 1rem;
       align-items: center;
-      padding: 1rem 1.25rem;
+      padding: 1.1rem 1.5rem;
       border-bottom: 1px solid var(--border);
+      background: var(--surface);
     }
     .product-garment-img {
-      width: 60px;
-      height: 60px;
+      width: 72px;
+      height: 96px;
       object-fit: cover;
       border-radius: var(--r-md);
       background: var(--surface2);
       flex-shrink: 0;
+      border: 1px solid var(--border);
     }
     .product-garment-placeholder {
-      width: 60px;
-      height: 60px;
+      width: 72px;
+      height: 96px;
       border-radius: var(--r-md);
       background: var(--surface2);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.6rem;
+      font-size: 2rem;
       flex-shrink: 0;
     }
     .product-meta { flex: 1; min-width: 0; }
-    .product-name { font-weight: 700; font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .product-count { font-size: .78rem; color: var(--muted); margin-top: .2rem; }
+    .product-name { font-weight: 700; font-size: 1rem; margin-bottom: .3rem; }
+    .product-count { font-size: .82rem; color: var(--muted); }
     .product-tryons {
-      display: flex;
-      gap: .5rem;
-      padding: .75rem 1.25rem;
-      overflow-x: auto;
-      min-height: 64px;
-      align-items: center;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: .75rem;
+      padding: 1.25rem 1.5rem;
     }
     .tryon-thumb {
-      width: 52px;
-      height: 52px;
-      border-radius: var(--r-sm);
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: var(--r-md);
       object-fit: cover;
-      flex-shrink: 0;
       cursor: pointer;
-      transition: transform .15s;
+      transition: transform .15s, box-shadow .15s;
+      border: 1px solid var(--border);
     }
-    .tryon-thumb:hover { transform: scale(1.08); }
-    .no-tryons-yet { font-size: .78rem; color: var(--muted); }
+    .tryon-thumb:hover { transform: scale(1.04); box-shadow: 0 4px 16px rgba(0,0,0,.12); }
+    .no-tryons-yet { font-size: .82rem; color: var(--muted); padding: 1rem 1.5rem; }
 
     /* ── Lightbox ── */
     .lightbox {
@@ -569,8 +569,12 @@
 
     // Products section
     if (products && products.length > 0) {
+      const totalClicks = stats.button_clicks || 0;
       document.getElementById('productsSubtitle').textContent = `${products.length} product${products.length !== 1 ? 's' : ''} tried on`;
-      document.getElementById('productsGrid').innerHTML = products.map(p => `
+      document.getElementById('productsGrid').innerHTML = products.map(p => {
+        const convRate = totalClicks > 0 ? Math.round((p.tryon_count / totalClicks) * 100) : null;
+        const thumbs = p.recent_tryons.filter(t => t.result_image_url);
+        return `
         <div class="product-card">
           <div class="product-card-header">
             ${p.isolated_garment_url
@@ -578,17 +582,19 @@
               : `<div class="product-garment-placeholder">🧥</div>`}
             <div class="product-meta">
               <div class="product-name">${p.product_name || p.product_id}</div>
-              <div class="product-count">${p.tryon_count} try-on${p.tryon_count !== 1 ? 's' : ''}</div>
+              <div class="product-count">
+                <strong>${p.tryon_count}</strong> try-on${p.tryon_count !== 1 ? 's' : ''}
+                ${convRate !== null ? `&nbsp;·&nbsp;<span style="color:var(--cyan); font-weight:700;">${convRate}% conversion</span>` : ''}
+              </div>
             </div>
           </div>
-          <div class="product-tryons">
-            ${p.recent_tryons.length
-              ? p.recent_tryons.map(t => t.result_image_url
-                  ? `<img class="tryon-thumb" src="${t.result_image_url}" alt="try-on" loading="lazy" onclick="openLightbox('${t.result_image_url}')">`
-                  : '').join('')
-              : `<span class="no-tryons-yet">No results yet</span>`}
-          </div>
-        </div>`).join('');
+          ${thumbs.length
+            ? `<div class="product-tryons">
+                ${thumbs.map(t => `<img class="tryon-thumb" src="${t.result_image_url}" alt="try-on" loading="lazy" onclick="openLightbox('${t.result_image_url}')">`).join('')}
+               </div>`
+            : `<p class="no-tryons-yet">No results yet</p>`}
+        </div>`;
+      }).join('');
       document.getElementById('productsSection').style.display = 'block';
     } else {
       document.getElementById('productsSection').style.display = 'none';
