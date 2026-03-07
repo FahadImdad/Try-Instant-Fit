@@ -607,19 +607,23 @@ class GhostLayerWidget {
             <div class="gl-model-grid">
               <button class="gl-model-card gl-model-active" data-provider="primary" data-model="">
                 <div class="gl-mc-name">⭐ Google Try-On</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-spec">Specialized</span><span class="gl-mc-cost">$0.04</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-spec">Specialized</span><span class="gl-mc-cost">$0.04/try</span></div>
+              </button>
+              <button class="gl-model-card" data-provider="fallback" data-model="gemini-2.5-flash-image">
+                <div class="gl-mc-name">⚡ Flash 2.5</div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span><span class="gl-mc-cost">$0.044/try</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3.1-flash-image-preview">
                 <div class="gl-mc-name">⚡ Flash 3.1</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span><span class="gl-mc-cost">$0.09</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span><span class="gl-mc-cost">$0.09/try</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3.1-pro-image-preview">
                 <div class="gl-mc-name">🌟 Pro 3.1</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-best">Best</span><span class="gl-mc-cost">$0.27</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-best">Best</span><span class="gl-mc-cost">$0.27/try</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3-pro-image-preview">
                 <div class="gl-mc-name">⚠️ Pro 3</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-dep">Expires 3/9</span><span class="gl-mc-cost">$0.27</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-dep">Expires 3/9</span><span class="gl-mc-cost">$0.27/try</span></div>
               </button>
             </div>
           </div>
