@@ -598,6 +598,10 @@ class GhostLayerWidget {
           </div>
 
           <button class="gl-primary-btn" id="gl-generate-btn" disabled>Generate Try-On</button>
+          <div class="gl-result-actions">
+            <button class="gl-secondary-btn" id="gl-wl-btn-upload">♡ Wishlist</button>
+            <button class="gl-secondary-btn gl-buy-btn" id="gl-buy-btn-upload">🛒 Add to Cart</button>
+          </div>
           <p class="gl-privacy">🔒 Your photo is never stored. Processed securely and deleted immediately.</p>
         </div>
       `,
@@ -951,6 +955,30 @@ class GhostLayerWidget {
       generateBtn?.addEventListener('click', async () => {
         if (!this.selectedFile) return;
         await this.generateTryOn(this.selectedFile);
+      });
+
+      // ── Cart / Wishlist (upload step) ──
+      root.getElementById('gl-buy-btn-upload')?.addEventListener('click', () => {
+        const id = this.currentProduct?.id;
+        this.trackEvent('buy_clicked', { product_id: id });
+        if (id && (window as any).glAddToCart) {
+          (window as any).glAddToCart(id);
+        } else {
+          const atc =
+            document.querySelector<HTMLButtonElement>('button[name="add"]') ||
+            document.querySelector<HTMLButtonElement>('[class*="add-to-cart"]');
+          atc?.click();
+        }
+        this.closeOverlay();
+      });
+      root.getElementById('gl-wl-btn-upload')?.addEventListener('click', () => {
+        const id = this.currentProduct?.id;
+        this.trackEvent('wishlist_clicked', { product_id: id });
+        if (id && (window as any).glAddToWL) {
+          (window as any).glAddToWL(id);
+          const btn = root.getElementById('gl-wl-btn-upload');
+          if (btn) btn.textContent = '♥ Wishlisted';
+        }
       });
     }
 
