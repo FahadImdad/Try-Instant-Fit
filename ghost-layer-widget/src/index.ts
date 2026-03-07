@@ -35,6 +35,7 @@ class GhostLayerWidget {
   private countdownTimer: number | null = null;
   private lightingInterval: number | null = null;
   private lastBrightness = 128;
+  private selectedProvider: 'primary' | 'fallback' = 'primary';
 
   constructor(brandId: string) {
     this.brandId = brandId;
@@ -597,6 +598,12 @@ class GhostLayerWidget {
             </div>
           </div>
 
+          <div class="gl-model-toggle">
+            <span class="gl-model-label">AI Model:</span>
+            <button class="gl-model-btn gl-model-active" id="gl-model-primary" data-provider="primary">⭐ Google Try-On</button>
+            <button class="gl-model-btn" id="gl-model-fallback" data-provider="fallback">🤖 Gemini</button>
+          </div>
+
           <button class="gl-primary-btn" id="gl-generate-btn" disabled>Generate Try-On</button>
           <div class="gl-result-actions">
             <button class="gl-secondary-btn" id="gl-wl-btn-upload">♡ Wishlist</button>
@@ -810,6 +817,11 @@ class GhostLayerWidget {
       .gl-ghost-btn:hover { border-color: #d1d5db; }
 
       .gl-privacy { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 8px; line-height: 1.4; }
+      .gl-model-toggle { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+      .gl-model-label { font-size: 11px; color: #6b7280; white-space: nowrap; }
+      .gl-model-btn { flex: 1; padding: 6px 10px; border: 1.5px solid #e5e7eb; border-radius: 8px; background: #f9fafb; color: #6b7280; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.15s; }
+      .gl-model-btn:hover { border-color: #6366f1; color: #6366f1; }
+      .gl-model-active { border-color: #6366f1 !important; background: #f5f3ff !important; color: #6366f1 !important; }
 
       /* Processing */
       .gl-spinner {
@@ -958,6 +970,18 @@ class GhostLayerWidget {
       });
 
       // ── Cart / Wishlist (upload step) ──
+      // ── Model toggle ──
+      root.getElementById('gl-model-primary')?.addEventListener('click', () => {
+        this.selectedProvider = 'primary';
+        root.getElementById('gl-model-primary')?.classList.add('gl-model-active');
+        root.getElementById('gl-model-fallback')?.classList.remove('gl-model-active');
+      });
+      root.getElementById('gl-model-fallback')?.addEventListener('click', () => {
+        this.selectedProvider = 'fallback';
+        root.getElementById('gl-model-fallback')?.classList.add('gl-model-active');
+        root.getElementById('gl-model-primary')?.classList.remove('gl-model-active');
+      });
+
       root.getElementById('gl-buy-btn-upload')?.addEventListener('click', () => {
         const id = this.currentProduct?.id;
         this.trackEvent('buy_clicked', { product_id: id });
@@ -1209,7 +1233,7 @@ class GhostLayerWidget {
       formData.append('product_name', this.currentProduct?.name || '');
       formData.append('brand_id', this.brandId);
       formData.append('source', 'ghost-layer');
-      formData.append('provider', 'gemini');
+      formData.append('provider', this.selectedProvider);
 
       const res = await fetch(`${DEFAULT_API}/api/widget/try-on`, { method: 'POST', body: formData });
 
