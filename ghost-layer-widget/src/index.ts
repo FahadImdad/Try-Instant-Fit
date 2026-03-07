@@ -1223,8 +1223,22 @@ class GhostLayerWidget {
 
   // ─── Try-On Generation ────────────────────────────────────────────────────
 
+  private tryOnCacheKey(photo: File): string {
+    return `gl_tryon_${this.currentProduct?.id}_${photo.name}_${photo.size}`;
+  }
+
   private async generateTryOn(userPhoto: File): Promise<void> {
     this.stopCamera();
+
+    // ── Session cache check ───────────────────────────────────────────────────
+    const cacheKey = this.tryOnCacheKey(userPhoto);
+    const cached = sessionStorage.getItem(cacheKey);
+    if (cached) {
+      this.trackEvent('tryon_completed', { product_id: this.currentProduct?.id, result_url: cached, cached: true });
+      this.renderOverlay('result', { resultUrl: cached });
+      return;
+    }
+
     this.renderOverlay('processing');
     this.trackEvent('tryon_started', { product_id: this.currentProduct?.id });
 
@@ -1248,6 +1262,9 @@ class GhostLayerWidget {
       const result = await res.json();
       const resultUrl: string = result.result_url || result.resultUrl;
       if (!resultUrl) throw new Error('No result image returned');
+
+      // Cache result so repeat try-ons with same photo are free
+      try { sessionStorage.setItem(cacheKey, resultUrl); } catch (_e) {}
 
       this.trackEvent('tryon_completed', { product_id: this.currentProduct?.id, result_url: resultUrl });
       this.renderOverlay('result', { resultUrl });
