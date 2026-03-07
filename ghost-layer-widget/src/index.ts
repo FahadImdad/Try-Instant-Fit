@@ -37,6 +37,7 @@ class GhostLayerWidget {
   private lastBrightness = 128;
   private selectedProvider: 'primary' | 'fallback' = 'primary';
   private selectedGeminiModel = 'gemini-3.1-pro-image-preview';
+  private selectedResolution = '512';
 
   constructor(brandId: string) {
     this.brandId = brandId;
@@ -607,25 +608,35 @@ class GhostLayerWidget {
             <div class="gl-model-grid">
               <button class="gl-model-card gl-model-active" data-provider="primary" data-model="">
                 <div class="gl-mc-name">⭐ Google Try-On</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-spec">Specialized</span><span class="gl-mc-cost">$0.04/try</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-spec">Specialized</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-2.5-flash-image">
                 <div class="gl-mc-name">⚡ Flash 2.5</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span><span class="gl-mc-cost">$0.044/try</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3.1-flash-image-preview">
                 <div class="gl-mc-name">⚡ Flash 3.1</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span><span class="gl-mc-cost">$0.09/try</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-good">Good</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3.1-pro-image-preview">
                 <div class="gl-mc-name">🌟 Pro 3.1</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-best">Best</span><span class="gl-mc-cost">$0.27/try</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-best">Best</span></div>
               </button>
               <button class="gl-model-card" data-provider="fallback" data-model="gemini-3-pro-image-preview">
                 <div class="gl-mc-name">⚠️ Pro 3</div>
-                <div class="gl-mc-meta"><span class="gl-q gl-q-dep">Expires 3/9</span><span class="gl-mc-cost">$0.27/try</span></div>
+                <div class="gl-mc-meta"><span class="gl-q gl-q-dep">Expires 3/9</span></div>
               </button>
             </div>
+          </div>
+          <div class="gl-model-section">
+            <span class="gl-model-label">Resolution:</span>
+            <div class="gl-res-grid">
+              <button class="gl-res-btn gl-res-active" data-res="512">512px</button>
+              <button class="gl-res-btn" data-res="1024">1K</button>
+              <button class="gl-res-btn" data-res="2048">2K</button>
+              <button class="gl-res-btn" data-res="4096">4K</button>
+            </div>
+            <div class="gl-cost-line">Est. cost: <strong id="gl-cost-est">$0.04</strong>/try-on</div>
           </div>
 
           <button class="gl-primary-btn" id="gl-generate-btn" disabled>Generate Try-On</button>
@@ -841,6 +852,12 @@ class GhostLayerWidget {
       .gl-ghost-btn:hover { border-color: #d1d5db; }
 
       .gl-privacy { font-size: 11px; color: #9ca3af; text-align: center; margin-top: 8px; line-height: 1.4; }
+      .gl-res-grid { display: flex; gap: 5px; margin-bottom: 5px; }
+      .gl-res-btn { flex: 1; padding: 5px 4px; border: 1.5px solid #e5e7eb; border-radius: 8px; background: #f9fafb; cursor: pointer; font-size: 10px; font-weight: 700; color: #6b7280; transition: all 0.15s; }
+      .gl-res-btn:hover { border-color: #6366f1; color: #6366f1; }
+      .gl-res-btn.gl-res-active { border-color: #6366f1 !important; background: #f5f3ff !important; color: #6366f1 !important; }
+      .gl-cost-line { font-size: 11px; color: #6b7280; text-align: right; margin-bottom: 2px; }
+      .gl-cost-line strong { color: #059669; }
       .gl-model-section { margin-bottom: 10px; }
       .gl-model-label { font-size: 11px; color: #6b7280; display: block; margin-bottom: 6px; }
       .gl-model-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
@@ -1003,7 +1020,22 @@ class GhostLayerWidget {
         await this.generateTryOn(this.selectedFile);
       });
 
-      // ── Cart / Wishlist (upload step) ──
+      // ── Cost lookup table (fresh try-on = 2 calls, cached = 1 call) ──
+      const COSTS: Record<string, Record<string, number>> = {
+        'primary':                        { '512': 0.04,   '1024': 0.04,   '2048': 0.04,   '4096': 0.04   },
+        'gemini-2.5-flash-image':         { '512': 0.044,  '1024': 0.068,  '2048': 0.10,   '4096': 0.152  },
+        'gemini-3.1-flash-image-preview': { '512': 0.09,   '1024': 0.134,  '2048': 0.202,  '4096': 0.302  },
+        'gemini-3.1-pro-image-preview':   { '512': 0.268,  '1024': 0.268,  '2048': 0.268,  '4096': 0.48   },
+        'gemini-3-pro-image-preview':     { '512': 0.268,  '1024': 0.268,  '2048': 0.268,  '4096': 0.48   },
+      };
+      const updateCost = () => {
+        const el = root.getElementById('gl-cost-est');
+        if (!el) return;
+        const key = this.selectedProvider === 'primary' ? 'primary' : this.selectedGeminiModel;
+        const cost = COSTS[key]?.[this.selectedResolution] ?? 0.04;
+        el.textContent = `$${cost.toFixed(3)}`;
+      };
+
       // ── Model toggle ──
       root.querySelectorAll('.gl-model-card').forEach((btn) => {
         btn.addEventListener('click', () => {
@@ -1013,8 +1045,21 @@ class GhostLayerWidget {
           const model = (btn as HTMLElement).dataset.model ?? '';
           this.selectedProvider = provider;
           this.selectedGeminiModel = model;
+          updateCost();
         });
       });
+
+      // ── Resolution toggle ──
+      root.querySelectorAll('.gl-res-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          root.querySelectorAll('.gl-res-btn').forEach((b) => b.classList.remove('gl-res-active'));
+          btn.classList.add('gl-res-active');
+          this.selectedResolution = (btn as HTMLElement).dataset.res ?? '512';
+          updateCost();
+        });
+      });
+
+      updateCost(); // set initial cost on render
 
       root.getElementById('gl-buy-btn-upload')?.addEventListener('click', () => {
         const id = this.currentProduct?.id;
@@ -1284,6 +1329,7 @@ class GhostLayerWidget {
       formData.append('provider', this.selectedProvider);
       if (this.selectedProvider === 'fallback') {
         formData.append('gemini_model', this.selectedGeminiModel);
+        formData.append('output_resolution', this.selectedResolution);
       }
 
       const res = await fetch(`${DEFAULT_API}/api/widget/try-on`, { method: 'POST', body: formData });
