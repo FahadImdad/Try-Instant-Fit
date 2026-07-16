@@ -1,0 +1,10 @@
+- generic [ref=f4e2]:
+  - generic [ref=f4e3]:
+    - link "Back" [ref=f4e4] [cursor=pointer]:
+      - /url: "#"
+      - img [ref=f4e5]
+    - heading "Catalogue" [level=1] [ref=f4e7]
+  - generic [ref=f4e30]:
+    - text: Powered by
+    - link "Try Instant Fit" [ref=f4e31] [cursor=pointer]:
+      - /url: https://tryinstantfit.com

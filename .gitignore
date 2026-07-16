@@ -93,3 +93,6 @@ TRASH/
 
 # Node modules
 node_modules/
+
+# MCP server config — contains live API keys, never commit
+.mcp.json

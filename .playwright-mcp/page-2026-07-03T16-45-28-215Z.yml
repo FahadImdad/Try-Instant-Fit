@@ -1,0 +1,11 @@
+- generic [ref=e2]:
+  - generic [ref=e3]:
+    - link "Back" [ref=e4] [cursor=pointer]:
+      - /url: "#"
+      - text: ←
+    - heading "Catalogue" [level=1] [ref=e5]
+  - paragraph [ref=e8]: Loading the catalogue…
+  - generic [ref=e9]:
+    - text: Powered by
+    - link "Try Instant Fit" [ref=e10] [cursor=pointer]:
+      - /url: https://tryinstantfit.com

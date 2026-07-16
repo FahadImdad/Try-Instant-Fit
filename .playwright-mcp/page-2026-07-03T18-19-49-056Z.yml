@@ -1,0 +1,236 @@
+- generic [active] [ref=f8e1]:
+  - generic "Pakistan" [ref=f8e2]:
+    - img "Pakistan" [ref=f8e3]
+  - navigation [ref=f8e4]:
+    - generic [ref=f8e5]:
+      - link "Try Instant Fit" [ref=f8e6] [cursor=pointer]:
+        - /url: /
+        - img "Try Instant Fit" [ref=f8e7]
+      - button "Toggle menu" [ref=f8e8] [cursor=pointer]
+  - generic [ref=f8e14]:
+    - generic [ref=f8e15]:
+      - generic [ref=f8e16]: 📱 Now Live
+      - heading "Let Customers Try It On Before They Buy" [level=1] [ref=f8e17]:
+        - text: Let Customers
+        - emphasis [ref=f8e18]: Try It On Before They Buy
+      - paragraph [ref=f8e19]: Every product gets a link and a QR. Your customer opens it, adds a selfie, and sees the outfit on themselves in seconds, right on their own phone. You get more sales and fewer returns.
+      - generic [ref=f8e20]:
+        - link "Get Started →" [ref=f8e21] [cursor=pointer]:
+          - /url: /register
+        - link "See How It Works" [ref=f8e22] [cursor=pointer]:
+          - /url: "#how-it-works"
+    - generic [ref=f8e23]:
+      - generic [ref=f8e26]: Live Try-On
+      - img "Try Instant Fit virtual try-on demo" [ref=f8e27]
+      - generic [ref=f8e53]: ✨ See It On You Instantly
+  - generic [ref=f8e56]:
+    - heading "Try It On, Right on Their Phone" [level=2] [ref=f8e57]
+    - paragraph [ref=f8e58]:
+      - strong [ref=f8e59]: "For your customer:"
+      - text: they pick an outfit, add a selfie, and see it on themselves in seconds. No trial room, no app, just their phone.
+    - paragraph [ref=f8e60]:
+      - strong [ref=f8e61]: "For your shop:"
+      - text: every product gets a try-on link and QR you can share online or place in-store, so more people buy with confidence and fewer orders come back.
+  - generic [ref=f8e63]:
+    - generic [ref=f8e64]:
+      - generic [ref=f8e65]: 🙋 For Your Customers
+      - heading "See It On You, Before You Buy" [level=2] [ref=f8e66]
+      - paragraph [ref=f8e67]: "No app. No sign-up. Just their phone. Here's what your customer does:"
+    - generic [ref=f8e68]:
+      - generic [ref=f8e69]:
+        - generic [ref=f8e70]: "1"
+        - heading "Scan QR or Open Link" [level=4] [ref=f8e71]
+        - paragraph [ref=f8e72]: They scan your QR in the shop, or open your link online. The product opens on their phone.
+      - generic [ref=f8e73]:
+        - generic [ref=f8e74]: "2"
+        - heading "Click Selfie or Upload Pic" [level=4] [ref=f8e75]
+        - paragraph [ref=f8e76]: They snap a quick selfie or pick one from their gallery. Front-facing photo, that's it.
+      - generic [ref=f8e77]:
+        - generic [ref=f8e78]: "3"
+        - heading "See It On You" [level=4] [ref=f8e79]
+        - paragraph [ref=f8e80]: In seconds, the AI puts the outfit on them, keeping their face, pose, and background.
+      - generic [ref=f8e81]:
+        - generic [ref=f8e82]: "4"
+        - heading "Download or Share" [level=4] [ref=f8e83]
+        - paragraph [ref=f8e84]: They download the result or share it with friends. Their photo stays private to them.
+  - generic [ref=f8e86]:
+    - generic [ref=f8e87]:
+      - generic [ref=f8e88]: 🏬 For Your Shop
+      - heading "Simple to Run, Built to Sell" [level=2] [ref=f8e89]
+      - paragraph [ref=f8e90]: You stay in control. No tech skills, no photoshoots, no app for anyone to install.
+    - generic [ref=f8e91]:
+      - generic [ref=f8e92]:
+        - generic [ref=f8e93]: 🔗
+        - heading "A Link and a QR" [level=4] [ref=f8e94]
+        - paragraph [ref=f8e95]: Every product gets both. Share the link online, place the QR in your shop.
+      - generic [ref=f8e96]:
+        - generic [ref=f8e97]: 🎛️
+        - heading "You Stay in Control" [level=4] [ref=f8e98]
+        - paragraph [ref=f8e99]: Turn any code on or off, set try-on limits, or lock it behind a passcode.
+      - generic [ref=f8e100]:
+        - generic [ref=f8e101]: 📊
+        - heading "See What's Working" [level=4] [ref=f8e102]
+        - paragraph [ref=f8e103]: Your dashboard shows how many try-ons each product gets, so you know what sells.
+      - generic [ref=f8e104]:
+        - generic [ref=f8e105]: 💳
+        - heading "Pay As You Go" [level=4] [ref=f8e106]
+        - paragraph [ref=f8e107]: One flat rate per try-on. No setup fee, no monthly plan. Top up when you need to.
+    - link "Get Started →" [ref=f8e109] [cursor=pointer]:
+      - /url: /register
+  - generic [ref=f8e111]:
+    - generic [ref=f8e112]:
+      - generic [ref=f8e113]: 🔒 Privacy First
+      - heading "Your Photos and Products Stay Private" [level=2] [ref=f8e114]
+    - generic [ref=f8e115]:
+      - generic [ref=f8e116]:
+        - generic [ref=f8e117]: 🙋
+        - heading "For Customers" [level=4] [ref=f8e118]
+        - paragraph [ref=f8e119]: Your try-on photo is yours. Only you see it. The shop never gets your picture.
+      - generic [ref=f8e120]:
+        - generic [ref=f8e121]: 🏬
+        - heading "For Shops" [level=4] [ref=f8e122]
+        - paragraph [ref=f8e123]: Your products stay in your account. No other brand can ever see them.
+  - generic [ref=f8e125]:
+    - generic [ref=f8e126]:
+      - generic [ref=f8e127]: 🏬 Setting Up Your Shop
+      - heading "Up and Running Fast" [level=2] [ref=f8e128]
+      - paragraph [ref=f8e129]: Easy to start. No tech skills needed.
+    - generic [ref=f8e130]:
+      - generic [ref=f8e131]:
+        - generic [ref=f8e132]: "1"
+        - heading "Sign Up" [level=4] [ref=f8e133]
+        - paragraph [ref=f8e134]:
+          - link "Register" [ref=f8e135] [cursor=pointer]:
+            - /url: /register
+          - text: with Google in seconds. Add your shop name and logo.
+      - generic [ref=f8e136]:
+        - generic [ref=f8e137]: "2"
+        - heading "Add Products" [level=4] [ref=f8e138]
+        - paragraph [ref=f8e139]: Add each item with a name, price, and photo. You get a link and a QR for each one.
+      - generic [ref=f8e140]:
+        - generic [ref=f8e141]: "3"
+        - heading "Share Link or QR" [level=4] [ref=f8e142]
+        - paragraph [ref=f8e143]: Put the link online, or the QR in your shop. Customers open it on any phone. No app needed.
+      - generic [ref=f8e144]:
+        - generic [ref=f8e145]: "4"
+        - heading "See Your Try-Ons" [level=4] [ref=f8e146]
+        - paragraph [ref=f8e147]:
+          - text: Open your
+          - link "Dashboard" [ref=f8e148] [cursor=pointer]:
+            - /url: /dashboard
+          - text: to see how many try-ons each product got.
+    - generic [ref=f8e149]:
+      - link "Register Now →" [ref=f8e150] [cursor=pointer]:
+        - /url: /register
+      - link "See Pricing" [ref=f8e151] [cursor=pointer]:
+        - /url: "#pricing"
+  - generic [ref=f8e153]:
+    - generic [ref=f8e154]:
+      - generic [ref=f8e155]: Pricing
+      - heading "Simple, Per Try-On Pricing" [level=2] [ref=f8e156]
+      - paragraph [ref=f8e157]: One flat rate. No setup fees, no monthly subscriptions - you only pay when a customer actually tries something on.
+    - generic [ref=f8e159]:
+      - generic [ref=f8e160]: Available Now
+      - generic [ref=f8e161]: 📱
+      - heading "Scan & Wear" [level=4] [ref=f8e162]
+      - generic [ref=f8e163]: $0.125 / try-on(≈ PKR 35)
+      - paragraph [ref=f8e164]: Flat rate · No setup fee · No monthly subscription
+    - generic [ref=f8e165]:
+      - link "Get Started →" [ref=f8e166] [cursor=pointer]:
+        - /url: /register
+      - link "Pricing FAQ" [ref=f8e167] [cursor=pointer]:
+        - /url: "#faq"
+  - generic [ref=f8e169]:
+    - generic [ref=f8e170]:
+      - generic [ref=f8e171]: FAQ
+      - heading "Common Questions" [level=2] [ref=f8e172]
+      - paragraph [ref=f8e173]: Everything you need to know before getting started.
+    - generic [ref=f8e174]:
+      - generic [ref=f8e176] [cursor=pointer]:
+        - text: How accurate is the virtual try-on?
+        - generic [ref=f8e177]: +
+      - generic [ref=f8e179] [cursor=pointer]:
+        - text: How long does it take to launch Scan & Wear?
+        - generic [ref=f8e180]: +
+      - generic [ref=f8e182] [cursor=pointer]:
+        - text: Do customers need to download an app?
+        - generic [ref=f8e183]: +
+      - generic [ref=f8e185] [cursor=pointer]:
+        - text: How is pricing calculated?
+        - generic [ref=f8e186]: +
+      - generic [ref=f8e188] [cursor=pointer]:
+        - text: Is everyone's data kept private?
+        - generic [ref=f8e189]: +
+  - generic [ref=f8e192]:
+    - heading "Ready to Let Customers Try Before They Buy?" [level=2] [ref=f8e193]
+    - paragraph [ref=f8e194]: Give shoppers the confidence to buy, and give your shop more sales with fewer returns. No setup fee, no monthly plan, you only pay when a customer actually tries something on.
+    - generic [ref=f8e195]:
+      - link "Get Started →" [ref=f8e196] [cursor=pointer]:
+        - /url: /register
+      - link "See How It Works" [ref=f8e197] [cursor=pointer]:
+        - /url: "#how-it-works"
+  - contentinfo [ref=f8e198]:
+    - generic [ref=f8e199]:
+      - generic [ref=f8e200]:
+        - generic [ref=f8e201]:
+          - link "Try Instant Fit" [ref=f8e202] [cursor=pointer]:
+            - /url: /
+            - img "Try Instant Fit" [ref=f8e203]
+          - paragraph [ref=f8e204]: AI virtual try-on for fashion shops. Customers see the outfit on themselves before they buy. Private and simple.
+        - generic [ref=f8e205]:
+          - heading "Product" [level=4] [ref=f8e206]
+          - list [ref=f8e207]:
+            - listitem [ref=f8e208]:
+              - link "Scan & Wear QR" [ref=f8e209] [cursor=pointer]:
+                - /url: "#products"
+            - listitem [ref=f8e210]:
+              - link "How It Works" [ref=f8e211] [cursor=pointer]:
+                - /url: "#how-it-works"
+            - listitem [ref=f8e212]:
+              - link "Pricing" [ref=f8e213] [cursor=pointer]:
+                - /url: "#pricing"
+        - generic [ref=f8e214]:
+          - heading "Get Started" [level=4] [ref=f8e215]
+          - list [ref=f8e216]:
+            - listitem [ref=f8e217]:
+              - link "Contact Us" [ref=f8e218] [cursor=pointer]:
+                - /url: /contact-us
+            - listitem [ref=f8e219]:
+              - link "Client Dashboard" [ref=f8e220] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f8e221]:
+              - link "Pricing" [ref=f8e222] [cursor=pointer]:
+                - /url: "#pricing"
+            - listitem [ref=f8e223]:
+              - link "How It Works" [ref=f8e224] [cursor=pointer]:
+                - /url: "#how-it-works"
+        - generic [ref=f8e225]:
+          - heading "Contact" [level=4] [ref=f8e226]
+          - list [ref=f8e227]:
+            - listitem [ref=f8e228]:
+              - link "hello@tryinstantfit.com" [ref=f8e229] [cursor=pointer]:
+                - /url: mailto:hello@tryinstantfit.com
+            - listitem [ref=f8e230]:
+              - link "WhatsApp Us" [ref=f8e231] [cursor=pointer]:
+                - /url: https://wa.me/923147800991
+            - listitem [ref=f8e232]: Pakistan → Global
+      - generic [ref=f8e233]:
+        - paragraph [ref=f8e234]: © 2026 Try Instant Fit. All rights reserved. AI-powered virtual try-on for fashion retail.
+        - generic [ref=f8e235]:
+          - link "wa" [ref=f8e236] [cursor=pointer]:
+            - /url: https://wa.me/923147800991
+          - link "@" [ref=f8e237] [cursor=pointer]:
+            - /url: mailto:hello@tryinstantfit.com
+      - paragraph [ref=f8e238]:
+        - text: Icons by
+        - link "Freepik" [ref=f8e239] [cursor=pointer]:
+          - /url: https://www.flaticon.com/authors/freepik
+        - text: ","
+        - link "Rizki Ahmad Fauzi" [ref=f8e240] [cursor=pointer]:
+          - /url: https://www.flaticon.com/authors/rizki-ahmad-fauzi
+        - text: ", and"
+        - link "Dewi Sari" [ref=f8e241] [cursor=pointer]:
+          - /url: https://www.flaticon.com/authors/dewi-sari
+        - text: from
+        - link "www.flaticon.com" [ref=f8e242] [cursor=pointer]:
+          - /url: https://www.flaticon.com/
